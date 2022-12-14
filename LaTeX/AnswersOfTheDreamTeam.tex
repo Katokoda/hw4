@@ -82,7 +82,49 @@ And we will take $z_2=(x_2,y_2)=((0,1),(1,0))$. we also check that $z_2 \in S$.
 \end{itemize}
 Lastly, we will take $\lambda=\frac{1}{2}$. Now we can compute our $z=\lambda z_1 + (1-\lambda) z_2$
 $$z=\lambda z_1 + (1-\lambda) z_2=\frac{1}{2}((1,0),(0,1))+\frac{1}{2}((0,1),(1,0))=((\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}))=(x,y)$$
-But if we compute $x^\top y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.
+But if we compute $x^\top y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.\\
+
+By definition, LICQ holds if and only if the $\nabla h_i$ and $\nabla g_i$ for $g_i$ that are active holds.\\
+Here we do not have any $g_i$ but we have three function h:
+\begin{itemize}
+\item  $h_1(x,y)=1-x^\top x$
+\item $h_2(x,y)=1-y^\top y$
+\item $h_3(x,y)= x^\top y$
+\end{itemize} 
+If we compute their gradients, we get:
+\begin{itemize}
+\item  $\nabla_x h_1(x,y)=\nabla_x \left(1-x^\top x\right)= \nabla_x \left(1-\sum_{i=1}^n x_{i}^2 \right)=-2x$  and $\nabla_y h_1(x,y)=0$ \\
+
+$\qquad$ then $\nabla h_1(x,y)=$
+$
+\begin{bmatrix}
+\vec{x}\\
+\vec{0}
+\end{bmatrix}
+$ where $\vec{0}$ is the vector $\vec{0} \in \R^n$.
+\item  $\nabla_x h_2(x,y)=0$ and $\nabla_y h_2(x,y)=\nabla_y \left(1-y^\top y\right)= \nabla_y \left(1-\sum_{i=1}^n y_{i}^2 \right)=-2y$ \\
+
+$\qquad$ then $\nabla h_2(x,y)=$
+$
+\begin{bmatrix}
+\vec{0}\\
+\vec{y}
+\end{bmatrix}
+$
+\item $\nabla_x h_3(x,y)= \nabla_x \sum_{i=1}^n x_i \cdot y_i= \vec{y}$ and  $\nabla_y h_3(x,y)= \nabla_y \sum_{i=1}^n x_i \cdot y_i= \vec{x}$\\
+
+$\qquad$ then $\nabla h_3(x,y)=$
+$
+\begin{bmatrix}
+\vec{y}\\
+\vec{x}
+\end{bmatrix}
+$
+\end{itemize} 
+
+\noindent They are linearly independent:\\
+$\lambda_1 \nabla h_1(x,y)+\lambda_2\nabla h_2(x,y)+\lambda_3 \nabla h_3(x,y)=0 $ $\iff$ $\lambda_1 x + \lambda_3 y=0$ and  $\lambda_3 x + \lambda_2 y=0$. We have that this is true without having all the $\lambda_i=0$, if and only if $x=\lambda y$, or $y=0$. But if $y=0$, we have $h_2(x,y)=1\neq 0$ so our point is not feasible. Same with $h_1$ if $x=0$. Lastly, if $x=\lambda y$ for $\lambda, x, y \neq 0$, we get that $h_3(x,y)=x^\top y=\lambda y^\top y=\lambda ||y|| \neq 0$, so our point is not feasible either.\\
+To conclude, we get that for all of our feasible points, i.e. the points in the set $S$, $ \nabla h_1(x,y), \nabla h_2(x,y), \nabla h_3(x,y)$ are linearly independent, which means by definition that LICQ holds.
 
 \section*{Question 2}
 
