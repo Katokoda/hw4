@@ -57,6 +57,8 @@ ce devoir, Sam'enchante pas, vous?\\
 
 \section*{Question 1}
 
+NOTE/TODO je suis pas du tout sure que cette notation est très belle ducoup dites si vous voulez changer. Aussi c'est très moche les produit scalaires "horizontaux" mais plus lisible? jsp\\
+
 The feasible set is $S=\{x,y \in \R^n | h(x,y)=0\}=\{x,y \in \R^n | 1-x^\top x=0, 1-y^\top y=0, x^\top y=0 \}$. \\
 It is not convex. Indeed, we will give two points $z_1$ and $z_2$ $\in S$, but such that $z=\lambda z_1 + (1-\lambda) z_2 \notin S$ for a given $\lambda$. We will work with these $z_i \in \R^2 \times \R^2$ i.e. $n=2$.\\
 
@@ -73,6 +75,9 @@ And we will take $z_2=(x_2,y_2)=((0,1),(1,0))$. we also check that $z_2 \in S$.
 \item $1-y_{2}^\top y_2=1-\left<(1,0),(1,0)\right>=1-1=0$
 \item $x_{2}\top y_2=\left<(0,1),(1,0)\right>=0$
 \end{itemize}
+Lastly, we will take $\lambda=\frac{1}{2}$. Now we can compute our $z=\lambda z_1 + (1-\lambda) z_2$
+$$z=\lambda z_1 + (1-\lambda) z_2=\frac{1}{2}((1,0),(0,1))+\frac{1}{2}((0,1),(1,0))=((\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}))=(x,y)$$
+But if we compute $x^\top y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.
 
 \section*{Question 2}
 
