@@ -60,6 +60,12 @@ holà les gus \\
 ce devoir, Sam'enchante pas, vous?\\
 (un peu cass-é comme blague je l'avoue, mais gardez ez-poir en moi please)
 
+We want to solve the following problem:
+\begin{equation*} \tag{P}\label{P}
+\min_{x,y\in\R^n} \text{ subject to } h(x,y)=0,
+\end{equation*}
+where $f$ and $h$ are specified on the homework sheet.
+
 \section*{Question 1}
 
 NOTE/TODO je suis pas du tout sure que cette notation est très belle ducoup dites si vous voulez changer. Aussi c'est très moche les produit scalaires "horizontaux" mais plus lisible? jsp\\
@@ -84,28 +90,27 @@ Lastly, we will take $\lambda=\frac{1}{2}$. Now we can compute our $z=\lambda z_
 $$z=\lambda z_1 + (1-\lambda) z_2=\frac{1}{2}((1,0),(0,1))+\frac{1}{2}((0,1),(1,0))=((\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}))=(x,y)$$
 But if we compute $x^\top y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.\\
 
-By definition, LICQ holds if and only if the $\nabla h_i$ and $\nabla g_i$ for $g_i$ that are active holds.\\
-Here we do not have any $g_i$ but we have three function h:
+By definition, LICQ holds at $x\in S$ if and only if $\nabla h_1(x),\dots\nabla h_p(x)$, and $\nabla g_i(x)$ for $i\in \mathcal I(x) $ are linearly independant.\\
+Here, we do not have any constraint function $g_i$ but we have three functions $h_i$:
 \begin{itemize}
 \item  $h_1(x,y)=1-x^\top x$
 \item $h_2(x,y)=1-y^\top y$
 \item $h_3(x,y)= x^\top y$
 \end{itemize} 
-If we compute their gradients, we get:
+If we compute their gradients, we get:\\
+TODO : revoir gradient : les calculs sont justes et après la matrice est fausse, jsp si ça change les résultats pour le lin indep
 \begin{itemize}
-\item  $\nabla_x h_1(x,y)=\nabla_x \left(1-x^\top x\right)= \nabla_x \left(1-\sum_{i=1}^n x_{i}^2 \right)=-2x$  and $\nabla_y h_1(x,y)=0$ \\
+\item  $\nabla_x h_1(x,y)=\nabla_x \left(1-x^\top x\right)= \nabla_x \left(1-\sum_{i=1}^n x_{i}^2 \right)=-2\vec x$  and $\nabla_y h_1(x,y)=0$ \\
 
-$\qquad$ then $\nabla h_1(x,y)=$
-$
+$\qquad$ then $\nabla h_1(x,y)=
 \begin{bmatrix}
 \vec{x}\\
 \vec{0}
 \end{bmatrix}
 $ where $\vec{0}$ is the vector $\vec{0} \in \R^n$.
-\item  $\nabla_x h_2(x,y)=0$ and $\nabla_y h_2(x,y)=\nabla_y \left(1-y^\top y\right)= \nabla_y \left(1-\sum_{i=1}^n y_{i}^2 \right)=-2y$ \\
+\item  $\nabla_x h_2(x,y)=0$ and $\nabla_y h_2(x,y)=\nabla_y \left(1-y^\top y\right)= \nabla_y \left(1-\sum_{i=1}^n y_{i}^2 \right)=-2\vec y$ \\
 
-$\qquad$ then $\nabla h_2(x,y)=$
-$
+$\qquad$ then $\nabla h_2(x,y)=
 \begin{bmatrix}
 \vec{0}\\
 \vec{y}
@@ -159,10 +164,27 @@ Hence we can write the dual as:
 \end{equation*}
 
 \section*{Question 5}
-We know that $M_\mu$ is symmetric for all $\mu\in\R^3$. If $\mu$ is a solution of the dual problem, then the matrix $M_\mu$ associated with the values of $\mu$ should be positive semidefinite. This implies in particular that the diagonal blocks would be positive semidefinite too, i.e. $A-\mu_1 I_n\succeq 0$ and $B-\mu_2 I_n \succeq 0$. The two latter conditions are equivalent to $\mu_1\leq \lambda_{\min} (A)$ and $\mu_2\leq \lambda_{\min}(B)$, where  $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ are the smallest eigenvalues of $A$ and $B$ respectively.\\
-Hence, if we focus only on satisfying the conditions  $A-\mu_1 I_n\succeq 0$ and $B-\mu_2 I_n \succeq 0$, the optimal value for \eqref{D} is $\lambda_{\min} (A)+\lambda_{\min} (B)$. \\
+We know that $M_\mu$ is symmetric for all $\mu\in\R^3$. If $\mu$ is a solution of the dual problem, then the matrix $M_\mu$ associated with the values of $\mu$ should be positive semidefinite. This implies in particular that the diagonal blocks would be positive semidefinite too, i.e. $A-2\mu_1 I_n\succeq 0$ and $B-2\mu_2 I_n \succeq 0$. The two latter conditions are equivalent to $2\mu_1\leq \lambda_{\min} (A)$ and $2\mu_2\leq \lambda_{\min}(B)$, where  $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ are the smallest eigenvalues of $A$ and $B$ respectively.\\
+Hence, if we focus only on satisfying the conditions  $A-2\mu_1 I_n\succeq 0$ and $B-2\mu_2 I_n \succeq 0$, the optimal value for \eqref{D} is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$. \\
 In fact, this is the optimal value even for the whole condition $M_\mu\succeq 0$. Indeed, by question 2,
 \section*{Question 6}
+To use the strong duality theorem, we need to satisfy the two following assumptions:
+\begin{align*}
+(\text{A}1) &  \text{ the primal problem \eqref{P} admits a KKT point } (x^*,y^*)\in S \text{ with valid Lagrange multipliers } \mu^*\in \R^3 \\
+(\text{A}1) &  \text{ the function } (x,y)\mapsto L(x,y,\mu^*) \text{ is convex}
+\end{align*}
+
+\noindent For $ (x^*,y^*)\in S$ to be KKT with Lagrange multipliers $\mu^*$, we need: $$h(x^*,y^*)=0 \text{ and }-\nabla f(x^*,y^*)=\sum_{i=1}^3\mu_i\nabla h_i (x^*,y^*).$$
+The gradient of $h_1,h_2$ and $h_3$ were already computed in question 1. We can compute easily:
+$$\nabla f(x,y) =\begin{bmatrix}
+Ax \\ By
+\end{bmatrix}$$
+Hence $(x^*,y^*)$ and $\mu^*$ need to satisfy
+$$-\begin{bmatrix}Ax^* \\ By^*\end{bmatrix}
+= \mu_1 \begin{bmatrix} -2x^*\\ \vec 0 \end{bmatrix} + \mu_2 \begin{bmatrix} \vec 0\\ -2y^* \end{bmatrix}+\mu_3 \begin{bmatrix} y^*\\ x^* \end{bmatrix}
+$$
+This gives the system $\begin{cases} -Ax^* = -2\mu_1 x^* +\mu_3 y^* \\
+-By^* = -2\mu_2 y^* +\mu_3 x^*\end{cases}.$
 
 \section*{Question 7}
 
