@@ -215,6 +215,7 @@ We will compute each of these expressions:\\
 \p f(x,y)&=\frac{1}{2} \p x^\top A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
 &=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
 \end{align*}
+As $\p f(x,y)$ is the i-th element of $\nabla_x
 
 \section*{Question 8}
 
