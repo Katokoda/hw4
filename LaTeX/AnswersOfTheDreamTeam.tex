@@ -48,6 +48,8 @@
 x^\top y
 \end{bmatrix}}
 
+\newcommand{\p}{\frac{\partial}{\partial x_i}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Homework 4 - Continuous Optimization}
@@ -104,7 +106,7 @@ TODO : revoir gradient : les calculs sont justes et après la matrice est fausse
 
 $\qquad$ then $\nabla h_1(x,y)=
 \begin{bmatrix}
-\vec{x}\\
+-2 \vec{x}\\
 \vec{0}
 \end{bmatrix}
 $ where $\vec{0}$ is the vector $\vec{0} \in \R^n$.
@@ -113,7 +115,7 @@ $ where $\vec{0}$ is the vector $\vec{0} \in \R^n$.
 $\qquad$ then $\nabla h_2(x,y)=
 \begin{bmatrix}
 \vec{0}\\
-\vec{y}
+-2 \vec{y}
 \end{bmatrix}
 $
 \item $\nabla_x h_3(x,y)= \nabla_x \sum_{i=1}^n x_i \cdot y_i= \vec{y}$ and  $\nabla_y h_3(x,y)= \nabla_y \sum_{i=1}^n x_i \cdot y_i= \vec{x}$\\
@@ -128,10 +130,27 @@ $
 \end{itemize} 
 
 \noindent They are linearly independent:\\
-$\lambda_1 \nabla h_1(x,y)+\lambda_2\nabla h_2(x,y)+\lambda_3 \nabla h_3(x,y)=0 $ $\iff$ $\lambda_1 x + \lambda_3 y=0$ and  $\lambda_3 x + \lambda_2 y=0$. We have that this is true without having all the $\lambda_i=0$, if and only if $x=\lambda y$, or $y=0$. But if $y=0$, we have $h_2(x,y)=1\neq 0$ so our point is not feasible. Same with $h_1$ if $x=0$. Lastly, if $x=\lambda y$ for $\lambda, x, y \neq 0$, we get that $h_3(x,y)=x^\top y=\lambda y^\top y=\lambda ||y|| \neq 0$, so our point is not feasible either.\\
+$\lambda_1 \nabla h_1(x,y)+\lambda_2\nabla h_2(x,y)+\lambda_3 \nabla h_3(x,y)=0 $ $\iff$ $- 2 \lambda_1 x + \lambda_3 y=0$ and  $\lambda_3 x -2 \lambda_2 y=0$. We have that this is true without having all the $\lambda_i=0$, if and only if $x=\lambda y$ (for some lambda that can be deduced from the previous equations), or $y=0$. But if $y=0$, we have $h_2(x,y)=1\neq 0$ so our point is not feasible. Same with $h_1$ if $x=0$. Lastly, if $x=\lambda y$ for $\lambda, x, y \neq 0$, we get that $h_3(x,y)=x^\top y=\lambda y^\top y=\lambda ||y|| \neq 0$, so our point is not feasible either.\\
 To conclude, we get that for all of our feasible points, i.e. the points in the set $S$, $ \nabla h_1(x,y), \nabla h_2(x,y), \nabla h_3(x,y)$ are linearly independent, which means by definition that LICQ holds.
 
 \section*{Question 2}
+
+Our two first constraints $h_1(x,y)=1-x^\top x =0$ and $h_2(x,y)=1-y^\top y =0$ can be rephrased $||x||=||y||=1$.\\
+We notice that there is no constraint on x and y at the same time, i.e. a constraint that tells us what x must be related to y and vice-versa. Similarly, we can notice that our function doesn't have a part where x and y are mixed.\\
+It means that if we optimized x and y separately, the optimum found will be the optimum for our relaxed problem as well. So we rewrite our relaxed problem as:
+$$\min_{x\in \R^n:||x||=1}  \frac{1}{2} x^\top A x +\min_{y \in \R^n:||y||=1} \frac{1}{2} y^\top B y$$
+The two problems are solved identically as the only thing changing is the matrix. To solve them, we first recall example 2.14 from the notes:\\
+If $A$ is a symmetric linear map with eigenvalues $\lambda_1, ...,\lambda_n$, then $\forall u \in \mathcal{E}$, we have $$\lambda_{min} ||u||^2 \leq \left< u, A(u)\right>\leq \lambda_{max}||u||^2$$
+and by rewriting the scalar product we get 
+$$\lambda_{min} ||u||^2 \leq u^\top A u \leq \lambda_{max} ||u||^2$$
+Applied to our problems (let's look at the first as they are similar), knowing that we optimize on vector of norm 1, we get that for every feasible $x$, we have
+$$\frac{1}{2}\lambda_{min}  \leq\frac{1}{2} x^\top A x \leq\frac{1}{2} \lambda_{max} $$
+It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it:\\
+As $\lambda_{min}$ is an eigenvalue, it means that $\exists v_{min} \in \R^n, v_{min} \neq 0$ such that $A v_{min}=\lambda_{min} v_{min}$. We take $x=\frac{v_{min}}{||v_{min}||}$, and then we have
+$$x^\top A x =\frac{1}{||v_{min}||^2} v_{min}^\top \left( A v_{min} \right)=\frac{1}{||v_{min}||^2} v_{min}^\top (\lambda_{min} v_{min})=\frac{\lambda_{min}}{||v_{min}||^2} v_{min}^\top v_{min}=\frac{\lambda_{min}}{||v_{min}||^2} \cdot ||v_{min}||^2=\lambda_{min}$$
+So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{min} $, which means our bound is attained, which means it is the optimal value. \\
+We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
+
 
 \section*{Question 3}
 Let's find an expression for the Lagrangian function $L(x,y,\mu)$. We denote $I_n$ for the identity matrix in $\R^{n\times n}$.
@@ -187,6 +206,15 @@ This gives the system $\begin{cases} -Ax^* = -2\mu_1 x^* +\mu_3 y^* \\
 -By^* = -2\mu_2 y^* +\mu_3 x^*\end{cases}.$
 
 \section*{Question 7}
+
+We will first compute the gradient with respect to x. $\nabla_y$ will be done similarly.\\
+First of all, we know, by linearity, that 
+$$\nabla_x L_{\beta}(x,y,\mu)=\nabla_x f(x,y) + \nabla_x \mu^\top h(x,y)+ \frac{\beta}{2} \nabla_x ||h(x)||^2$$
+We will compute each of these expressions:\\
+\begin{align*}
+\p f(x,y)&=\frac{1}{2} \p x^\top A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
+&=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
+\end{align*}
 
 \section*{Question 8}
 
