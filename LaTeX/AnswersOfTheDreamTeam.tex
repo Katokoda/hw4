@@ -140,15 +140,15 @@ We notice that there is no constraint on x and y at the same time, i.e. a constr
 It means that if we optimized x and y separately, the optimum found will be the optimum for our relaxed problem as well. So we rewrite our relaxed problem as:
 $$\min_{x\in \R^n:||x||=1}  \frac{1}{2} x^\top A x +\min_{y \in \R^n:||y||=1} \frac{1}{2} y^\top B y$$
 The two problems are solved identically as the only thing changing is the matrix. To solve them, we first recall example 2.14 from the notes:\\
-If $A$ is a symmetric linear map with eigenvalues $\lambda_1, ...,\lambda_n$, then $\forall u \in \mathcal{E}$, we have $$\lambda_{min} ||u||^2 \leq \left< u, A(u)\right>\leq \lambda_{max}||u||^2$$
+If $A$ is a symmetric linear map with eigenvalues $\lambda_1, ...,\lambda_n$, then $\forall u \in \mathcal{E}$, we have $$\lambda_{\min} ||u||^2 \leq \left< u, A(u)\right>\leq \lambda_{\max}||u||^2$$
 and by rewriting the scalar product we get 
-$$\lambda_{min} ||u||^2 \leq u^\top A u \leq \lambda_{max} ||u||^2$$
+$$\lambda_{\min} ||u||^2 \leq u^\top A u \leq \lambda_{\max} ||u||^2$$
 Applied to our problems (let's look at the first as they are similar), knowing that we optimize on vector of norm 1, we get that for every feasible $x$, we have
-$$\frac{1}{2}\lambda_{min}  \leq\frac{1}{2} x^\top A x \leq\frac{1}{2} \lambda_{max} $$
-It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it:\\
-As $\lambda_{min}$ is an eigenvalue, it means that $\exists v_{min} \in \R^n, v_{min} \neq 0$ such that $A v_{min}=\lambda_{min} v_{min}$. We take $x=\frac{v_{min}}{||v_{min}||}$, and then we have
-$$x^\top A x =\frac{1}{||v_{min}||^2} v_{min}^\top \left( A v_{min} \right)=\frac{1}{||v_{min}||^2} v_{min}^\top (\lambda_{min} v_{min})=\frac{\lambda_{min}}{||v_{min}||^2} v_{min}^\top v_{min}=\frac{\lambda_{min}}{||v_{min}||^2} \cdot ||v_{min}||^2=\lambda_{min}$$
-So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{min} $, which means our bound is attained, which means it is the optimal value. \\
+$$\frac{1}{2}\lambda_{\min}  \leq\frac{1}{2} x^\top A x \leq\frac{1}{2} \lambda_{\max} $$
+It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{\min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it:\\
+As $\lambda_{\min}$ is an eigenvalue, it means that $\exists v_{\min} \in \R^n, v_{\min} \neq 0$ such that $A v_{\min}=\lambda_{\min} v_{\min}$. We take $x=\frac{v_{\min}}{||v_{\min}||}$, and then we have
+$$x^\top A x =\frac{1}{||v_{\min}||^2} v_{\min}^\top \left( A v_{\min} \right)=\frac{1}{||v_{\min}||^2} v_{\min}^\top (\lambda_{\min} v_{\min})=\frac{\lambda_{\min}}{||v_{\min}||^2} v_{\min}^\top v_{\min}=\frac{\lambda_{\min}}{||v_{\min}||^2} \cdot ||v_{\min}||^2=\lambda_{\min}$$
+So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{\min} $, which means our bound is attained, which means it is the optimal value. \\
 We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
 
 
@@ -190,8 +190,12 @@ In fact, this is the optimal value even for the whole condition $M_\mu\succeq 0$
 To use the strong duality theorem, we need to satisfy the two following assumptions:
 \begin{align*}
 (\text{A}1) &  \text{ the primal problem \eqref{P} admits a KKT point } (x^*,y^*)\in S \text{ with valid Lagrange multipliers } \mu^*\in \R^3 \\
-(\text{A}1) &  \text{ the function } (x,y)\mapsto L(x,y,\mu^*) \text{ is convex}
+(\text{A}2) &  \text{ the function } (x,y)\mapsto L(x,y,\mu^*) \text{ is convex}
 \end{align*}
+
+Consider $\mu_1^*=\lambda_{\min} (A)/2$, $\mu_2^*=\lambda_{\min} (B)/2$ and $\mu_3^*=0$. We will try to find $x^*$ and $y^*$ a little later.\\
+
+\noindent First, consider the condition $(\text{A}2)$. Let $L_{\mu^*}(x,y) = L(x,y,\mu^*)$
 
 \noindent For $ (x^*,y^*)\in S$ to be KKT with Lagrange multipliers $\mu^*$, we need: $$h(x^*,y^*)=0 \text{ and }-\nabla f(x^*,y^*)=\sum_{i=1}^3\mu_i\nabla h_i (x^*,y^*).$$
 The gradient of $h_1,h_2$ and $h_3$ were already computed in question 1. We can compute easily:
@@ -203,7 +207,19 @@ $$-\begin{bmatrix}Ax^* \\ By^*\end{bmatrix}
 = \mu_1 \begin{bmatrix} -2x^*\\ \vec 0 \end{bmatrix} + \mu_2 \begin{bmatrix} \vec 0\\ -2y^* \end{bmatrix}+\mu_3 \begin{bmatrix} y^*\\ x^* \end{bmatrix}
 $$
 This gives the system $\begin{cases} -Ax^* = -2\mu_1 x^* +\mu_3 y^* \\
--By^* = -2\mu_2 y^* +\mu_3 x^*\end{cases}.$
+-By^* = -2\mu_2 y^* +\mu_3 x^*\end{cases}.$ \\
+In particular, taking the scalar product of the first equality with $x^*$ and of the second one with $y^*$ and using that $h(x^*, y^*)=0$, gives a new system : 
+$$\begin{cases} -(x^*)^\top Ax^* = -2\mu_1 (x^*)^\top x^* +\mu_3 (x^*)^\top y^* \\
+-(y^*)^\top By^* = -2\mu_2(y^*)^\top y^* +\mu_3(y^*)^\top x^*\end{cases}
+\iff 
+\begin{cases} -(x^*)^\top Ax^* = -2\mu_1\\
+-(y^*)^\top By^* = -2\mu_2\end{cases}
+\iff 
+\begin{cases} (x^*)^\top (A -2\mu_1 I)x^* = 0\\
+(y^*)^\top (B-2\mu_2 I)y^* =0 \end{cases}
+$$
+
+
 
 \section*{Question 7}
 
@@ -215,7 +231,7 @@ We will compute each of these expressions:\\
 \p f(x,y)&=\frac{1}{2} \p x^\top A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
 &=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
 \end{align*}
-As $\p f(x,y)$ is the i-th element of $\nabla_x
+As $\p f(x,y)$ is the$i$-th element of $\nabla_x$.
 
 \section*{Question 8}
 
