@@ -245,7 +245,42 @@ We will compute each of these expressions:\\
 \p f(x,y)&=\frac{1}{2} \p x^\top A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
 &=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
 \end{align*}
-As $\p f(x,y)$ is the $i$-th element of $\nabla_x$.
+As $\p f(x,y)$ is the $i$-th element of $\nabla_x f$, we get that $\nabla_x f= Ax$ \\
+
+Now for the second one, we can develop $\mu^\top h(x,y)=\mu_1 (1-x\top x)+\mu_2(1-y^\top y) + \mu_3 x^\top y$, so we have:
+\begin{align*}
+\nabla_x \mu^\top h(x,y)&=\nabla_x (\mu_1 (1-x\top x))+\nabla_x (\mu_2(1-y^\top y)) +\nabla_x ( \mu_3 x^\top y)\\
+&=\mu_1 \nabla_x (1-x\top x) + \mu_3 \nabla_x ( x^\top y)\\
+&=\mu_1 (2x) + \mu_3 y\\
+&=2\mu_1 x+\mu_3 y
+\end{align*}
+As $\p(x^\top x)=\p \sum_{i=1}^n x_i^2=2x_i$ and  $\p(x^\top y)=\p \sum_{i=1}^n x_i y_i=y_i$\\
+
+Now for the third part we will use the fact that $\nabla||x||^2=2x$ as $x^\top x=||x||^2$ and we've just computed it before. Plus we know the chain rule: $\p f\circ g(x)= \nabla f (g(x)) \cdot \p g(x)$. We can use it to compute our $\nabla$ :
+\begin{align*}
+\p \frac{\beta}{2} ||h(x,y)||^2&=\beta h(x,y) \cdot \p(h(x,y))\\
+\end{align*}
+which gives us the formula
+\begin{align*}
+\nabla_x \frac{\beta}{2} ||h(x,y)||^2&=\beta \nabla_x h(x,y) \cdot  h(x,y) \text{ where } \nabla_x h(x,y) \text{ is a n} \times \text{3 matrix}\\
+&=\beta\begin{bmatrix} -2x & \vec 0 & y \end{bmatrix}   \cdot \begin{bmatrix} 1-x^\top x \\ 1-y^\top y\\ x^\top y \end{bmatrix} \\
+&=\beta\begin{bmatrix}2(x^\top x-1) x_1+(x^\top y )y_1\\ \dots \\ 2(x^\top x-1) x_n+(x^\top y )y_n \end{bmatrix}\\
+&=\beta \left( 2(x^\top x-1) \vec x+(x^\top y )\vec y \right) 
+\end{align*}
+
+Putting together our three calculations, we get
+\begin{align*}
+\nabla_x L_\beta(x,y,\mu)&=Ax+2\mu_1 x+\mu_3 y+\beta \left( 2(x^\top x-1) \vec x+(x^\top y )\vec y \right) \\
+&=(A+ 2\beta (x^\top x-1)+2 \mu_1) x +(x^\top y + \mu_3)y
+\end{align*}
+
+Similarly, we get
+\begin{align*}
+\nabla_y L_\beta(x,y,\mu)&=By+2\mu_2 y+\mu_3 x+\beta \left( 2(y^\top y-1) \vec y+(x^\top y )\vec x \right) \\
+&=(x^\top y + \mu_3)x+(B+ 2\beta (y^\top y-1)+2 \mu_2) y
+\end{align*}
+
+
 
 \section*{Question 8}
 
