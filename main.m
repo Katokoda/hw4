@@ -24,9 +24,8 @@ f = @(z) f(z, A, B);
 disp("===========================")
 disp("Start of the gradient check")
 disp(newline)
-mu = [1; 2; -3];
-beta = 1.42;
-
+mu = randn(3, 1);
+beta = randn(1, 1);
 z = randn(2*n, 1); z = z/norm(z);
 v = randn(2*n, 1); v = v/norm(v);
 figure(2147483646); set(gcf, 'units', 'characters', 'position', [60 10 90 25]);
@@ -59,6 +58,8 @@ z0 = randn(2*n, 1); z0 = z0/norm(z0);
 z = z0;
 for beta = [1, 2, 4, 8, 16, 32, 64, 128, 256 ]% , 512, 1024, 2048, 4096]
     [z, zval] = silentMinXY(mu, beta, z);
+
+    % Display
     disp(newline + "Iteration with beta = " + beta + ".")
     disp("We found x and y:")
     disp([z(1:n), z(n+1:end)])
@@ -83,17 +84,19 @@ z0 = randn(2*n, 1); z0 = z0/norm(z0);
 z = z0;
 for beta = [1, 2, 4, 8, 16, 32, 64, 128, 256 ]% , 512, 1024, 2048, 4096]
     [z, zval] = silentMinXY(mu, beta, z);
+    % Udpating mu
+    hz = h(z);
+    mu = mu + beta * hz;
+
+    % Display
     disp(newline + "Iteration with beta = " + beta + ".")
     disp("We found x and y:")
     disp([z(1:n), z(n+1:end)])
     disp("with value f(x, y) = " + f(z))
-    disp("and h(x, y), mu :")
-    hz = h(z);
+    disp("and h(x, y), new mu :")
     disp([hz, mu])
     disp("which have norms")
     disp([vecnorm(hz), vecnorm(mu)])
-
-    disp("Alerte : Faut-il changer mu?")
 end
     %}
 
@@ -105,3 +108,5 @@ end
 disp("Alerte : fminunc with Quasi-Newton or TR?")
 
 disp("Alerte : tous nos vecteurs aléatoires sont unitaires, est-ce logique?")
+
+disp("x et y sont les deux unitaires, c'est fou non?")
