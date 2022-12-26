@@ -28,15 +28,16 @@ z = randn(2*n, 1); z = z/norm(z);
 v = randn(2*n, 1); v = v/norm(v);
 figure(2147483646); set(gcf, 'units', 'characters', 'position', [60 10 90 25]);
 checkgradient(@(z) LBeta(z, mu, beta, A, B), @(z) LBetaGrad(z, mu, beta, A, B), z, v);
+
     %}
 
 
 %% fminunc, Question 9
-   %{
+%   %{
 mu = [1; 2; -3];
 beta = 1.42;
 z0 = [1; 0; -1; 2; 1; 1; 2; 0; 1; 2];
 
-options = optimoptions('fminunc','SpecifyObjectiveGradient',true); % indicate gradient is provided
+options = optimoptions('fminunc', 'SpecifyObjectiveGradient', true, 'Display', 'iter'); % indicate gradient is provided
 z = fminunc(@(z) LBetaBoth(z, mu, beta, A, B), z0, options);
     %}
