@@ -11,8 +11,8 @@ function [z, zval] = minXY(mu, beta, A, B, z0, verbose)
     %   z           : The final z found with the given algorithm.
     %   zval        : It's value.
     options = optimoptions('fminunc');
-    options.SpecifyObjectiveGradient = true;  % indicate gradient is provided
-    %options.Algorithm = 'trust-region'; %TODO, think about that
+    options.SpecifyObjectiveGradient = true;    % indicate gradient is provided
+    %options.Algorithm = 'trust-region';        % We could also use TR...
     if verbose % add display
         options.Display = 'iter-detailed';
     else

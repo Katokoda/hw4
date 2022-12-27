@@ -157,6 +157,8 @@ $$x\tp A x =\frac{1}{||v_{\min}||^2} v_{\min}\tp \left( A v_{\min} \right)=\frac
 So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{\min} $, which means our bound is attained, which means it is the optimal value. \\
 We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
 
+TODO On devrait comparer avec le "target problem"
+
 
 \section*{Question 3}
 Let's find an expression for the Lagrangian function $L(x,y,\mu)$. We denote $I_n$ for the identity matrix in $\R^{n\times n}$.
@@ -293,12 +295,12 @@ Our function is named \mcode{LBetaValAndGrad} as it calls the two sub-functions 
 
 \lstinputlisting{../LBetaGrad.m}
 
-Those functions use the implemented functions \mcode{f} and \mcode{h} which are a direct implementation of their definition.
+Those functions use the functions \mcode{f} and \mcode{h} which are a direct implementation of their definition.
 
 \section*{Question 9}
 
-We have used the Matlab \mcode{fminunc} function. !!TODO!! Think whether to use 'Quasi-Newton' or 'Trust-region', maybe with algorithmic time?
-We have created a function \mcode{minXY} which calls the precedent function with the good parameters.\\
+We have used the Matlab \mcode{fminunc} function. We set it to use the 'Quasi-Newton' sub-algorithm as it is the default parameter, it performs as well as Trust-Region in our situation, and it is a little quicker.
+We have created a function \mcode{minXY} which calls the precedent function with our choices for the parameters.\\
 Here is our implementation.
 
 \lstinputlisting{../minXY.m}
@@ -322,7 +324,7 @@ and h(x, y), mu:
     2.3865   -3.0000
 \end{lstlisting}
 
-Note that the results are a little bit different if we are using 'Trust-region'. !!TODO!!
+Note that the results would have been little bit different if we were using 'trust-region' as a sub-algorithm for the function \mcode{fminunc}.
 
 
 \section*{Question 10}
@@ -333,11 +335,11 @@ The final iteration leaves:
 \begin{lstlisting}
 Iteration 9 with beta = 256.
 We found x and y:
-   -0.6036    0.4636
-   -0.2996   -0.3649
-    0.3370    0.6272
-   -0.1038   -0.4992
-    0.6591   -0.1458
+    0.6036   -0.4636
+    0.2996    0.3649
+   -0.3370   -0.6272
+    0.1038    0.4992
+   -0.6591    0.1458
 
 with value f(x, y) = -6.41
    LBeta(x, y, mu) = -6.3694
@@ -352,23 +354,23 @@ which have norms
 
 We notice that the norme of $h(x, y)$ is divided by two at each iterations, since $\beta h(x, y)$ stays almost constant.
 This confirms---as we have seen in the lecture notes; we could hope---that $h(x_k) \approx \frac{\mu^*}{\beta_k}$. This seems indeed to be the case, as we will see in question 11.\\
-We see that after 9 iterations, the points $x$ and $y$ still \textit{far} from $h(x, y) = 0$. That's why we consider the augmented Lagrangian method.
+We see that after 9 iterations, the points $x$ and $y$ are still \textit{far} from $h(x, y) = 0$. That's why we consider the augmented Lagrangian method.
 
 
 \section*{Question 11}
 The part of the \mcode{main} running the augmented Lagrangian method is the following:
 \lstinputlisting[firstline=91, lastline=113]{../main.m}
 
-Note that the only difference is the update of $\mu$ at line 10.
+Note that the only difference is the update of $\mu$ at line 10. Also, we decided not to choose a new $z_0$ randomly, but to reuse the same starting point as with the QPM of question 10.
 The final iteration leaves:
 \begin{lstlisting}
 Iteration 9 with beta = 256.
 We found x and y:
-   -0.5988    0.4605
-   -0.2988   -0.3626
-    0.3372    0.6237
-   -0.1041   -0.4965
-    0.6539   -0.1447
+    0.5988   -0.4605
+    0.2988    0.3626
+   -0.3372   -0.6237
+    0.1041    0.4965
+   -0.6539    0.1447
 
 with value f(x, y) = -6.3288
    LBeta(x, y, mu) = -6.3288
@@ -379,14 +381,37 @@ and h(x, y), new mu:
 
 which have norms
     0.0000    4.5595
+
+Our obtained value for the Dual problem is mu_1 + mu_2 = -6.3288
 \end{lstlisting}
 
 This time, $h(x, y)$ goes to 0 really quickly. Moreover, we see that our estimation of $\mu$ quickly stabilizes to a fixed value--- which we know is $\mu^*$--- which is indeed the one $\beta h(x, y)$ was converging to with the Quadratic penalty method.
 
+Note that depending on the starting points, the sign of the values may differ. But with all our tests, the numbers were $\pm$ the same.
+
 
 \section*{Question 12}
 
-Je suis beaucoup trop fatigué...
+Our program finds  
+$\mu =
+\begin{pmatrix}
+-3.2774\\
+-3.0515\\
+\pm 0.8582
+\end{pmatrix}$. We will work with $+ 0.8582$ for simplicity.
 
+This makes the Lagrangian function be 
+\begin{align*}
+L : (x, y) \mapsto &f(x, y) - 3.2774 (1 - x\tp x) - 3.0515 (1 - y\tp y) + 0.8582 x\tp y\\
+&= f(x, y) + 3.2774 x\tp x + 3.0515 y\tp y + 0.8582 x\tp y -6.3288
+\end{align*}
+
+We can also write this
+$ \dfrac{1}{2}
+\begin{bmatrix} x\tp & y\tp\end{bmatrix}
+\begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
+\mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}
+\begin{bmatrix} x \\ y \end{bmatrix}
+- 6.3288 $, using question 3.
 
 \end{document}

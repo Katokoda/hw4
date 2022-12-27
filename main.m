@@ -22,9 +22,9 @@ f = @(z) f(z, A, B);
 
 
 %% CheckGradient, only for DEBUG
-%   %{
-disp("===========================")
-disp("Start of the gradient check")
+   %{
+disp('===========================')
+disp('Start of the gradient check')
 disp(newline)
 mu = randn(3, 1);
 beta = randn(1, 1);
@@ -37,8 +37,8 @@ checkgradient(@(z) LBeta(z, mu, beta, A, B), @(z) LBetaGrad(z, mu, beta, A, B), 
 
 %% fminunc, Question 9
 %   %{
-disp("===========================================")
-disp("Start of one fminunc with fixed mu and beta")
+disp('===========================================')
+disp('Start of one fminunc with fixed mu and beta')
 mu = [1; 2; -3];
 beta = 1.42;
 z0 = [1; 0; -1; 2; 1; 1; 2; 0; 1; 2];
@@ -47,21 +47,21 @@ z0 = [1; 0; -1; 2; 1; 1; 2; 0; 1; 2];
 [z, zval] = minXY(mu, beta, A, B, z0, 1);
 
 % Display
-disp("Found x and y are")
+disp('Found x and y are')
 disp([z(1:n), z(n+1:end)])
 disp("with value f(x, y) = " + f(z))
 disp("and LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-disp("and h(x, y), mu:")
+disp('and h(x, y), mu:')
 disp([h(z), mu])
     %}
 
 
 %% Quadratic penalty method, Question 10
 %    %{
-disp("=====================================")
-disp("Start of the Quadratic penalty method")
+disp('=====================================')
+disp('Start of the Quadratic penalty method')
 mu = [0; 0; 0];
-z0 = randn(2*n, 1); z0 = z0/norm(z0);
+z0 = randn(2*n, 1);
 z = z0;
 beta = 1;
 for i = 1:N
@@ -69,14 +69,14 @@ for i = 1:N
 
     % Display
     disp(newline + "Iteration " + i + " with beta = " + beta + ".")
-    disp("We found x and y:")
+    disp('We found x and y:')
     disp([z(1:n), z(n+1:end)])
     disp("with value f(x, y) = " + f(z))
     disp("   LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-    disp("and h(x, y), beta*h(x, y):")
+    disp('and h(x, y), beta*h(x, y):')
     hz = h(z);
     disp([hz, beta * hz])
-    disp("which have norms")
+    disp('which have norms')
     disp([vecnorm(hz), beta * vecnorm(hz)])
 
     beta = 2 * beta; % Updating
@@ -86,10 +86,10 @@ end
 
 %% augmented Lagrangian method, Question 11
 %    %{
-disp("========================================")
-disp("Start of the augmented Lagrangian method")
+disp('========================================')
+disp('Start of the augmented Lagrangian method')
 mu = [0; 0; 0];
-z0 = randn(2*n, 1); z0 = z0/norm(z0);
+% z0 = randn(2*n, 1);   % We start with the same z0 as for QPM.
 z = z0;
 beta = 1;
 for i = 1:N
@@ -99,20 +99,43 @@ for i = 1:N
     mu = mu + beta * hz; % Updating
 
     % Display
-    disp(newline + "Iteration " + i + " with beta = " + beta+ ".")
-    disp("We found x and y:")
+    disp(newline + "Iteration " + i + " with beta = " + beta + ".")
+    disp('We found x and y:')
     disp([z(1:n), z(n+1:end)])
     disp("with value f(x, y) = " + f(z))
     disp("   LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-    disp("and h(x, y), new mu:")
+    disp('and h(x, y), new mu:')
     disp([hz, mu])
-    disp("which have norms")
+    disp('which have norms')
     disp([vecnorm(hz), vecnorm(mu)])
 
     beta = 2 * beta; % Updating
 end
     %}
 
+if N > 30
+    disp("ALERT: Be careful with big values of N.")
+    disp("When Beta is too big the stored value of mu will get turbulent.")
+end
 
-disp("Alerte : fminunc with Quasi-Newton or TR?")
-disp("Alerte : tous nos vecteurs aléatoires sont unitaires, est-ce logique?")
+disp("Our obtained value for the Dual problem is mu_1 + mu_2 = " + (mu(1) + mu(2)))
+lambdaA = min(eig(A));
+lambdaB = min(eig(B));
+if 2 * mu(1) > lambdaA
+    disp("But 2 * mu(1) > lambda_min(A): " + (2 * mu(1)) + " > " + lambdaA)
+end
+if 2 * mu(2) > lambdaB
+    disp("But 2 * mu(2) > lambda_min(B): " + (2 * mu(2)) + " > " + lambdaB)
+end
+if 2 * mu(1) <= lambdaA ||  2 * mu(2) <= lambdaB
+    disp("And mu is valid in the dual")
+end
+
+I = eye(5);
+M = [A - 2 * mu(1) * I, mu(3) * I; mu(3) * I, B - 2 * mu(2) * I];
+lambdaM = min(eig(M));
+if lambdaM < 0
+    disp("Therefore, M_mu is not semi-positive definite.")
+else
+    disp("Since M_mu is semi-positive definite.")
+end
