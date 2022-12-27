@@ -6,7 +6,7 @@
 %\selectlanguage{english} % Permet de changer de langue au milieu du document.
 \usepackage{lmodern}
 
-%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -31,6 +31,7 @@
 
 \newcommand{\fl}{f_\lambda}
 \newcommand{\dej}{\dfrac{\partial}{\partial x_j}}
+\newcommand{\tp}{^\top}
 
 \newcommand{\sump}{\sum_{i=1}^p}
 \newcommand{\summ}{\sum_{i=1}^m}
@@ -41,11 +42,11 @@
 \renewcommand{\Im}{\operatorname{Im}}
 \newcommand{\T}{\text{T}}
 \newcommand{\F}{\text{F}}
-\newcommand{\fxy}{\dfrac{1}{2}x^\top A x + \dfrac{1}{2} y^\top B y}
+\newcommand{\fxy}{\dfrac{1}{2}x\tp A x + \dfrac{1}{2} y\tp B y}
 \newcommand{\hxy}{\begin{bmatrix}
-1-x^\top x\\
-1-y^\top y\\
-x^\top y
+1-x\tp x\\
+1-y\tp y\\
+x\tp y
 \end{bmatrix}}
 
 \newcommand{\p}{\frac{\partial}{\partial x_i}}
@@ -77,37 +78,37 @@ where $f$ and $h$ are specified on the homework sheet.
 
 NOTE/TODO je suis pas du tout sure que cette notation est très belle ducoup dites si vous voulez changer. Aussi c'est très moche les produit scalaires "horizontaux" mais plus lisible? jsp\\
 
-The feasible set is $S=\{x,y \in \R^n | h(x,y)=0\}=\{x,y \in \R^n | 1-x^\top x=0, 1-y^\top y=0, x^\top y=0 \}$. \\
+The feasible set is $S=\{x,y \in \R^n | h(x,y)=0\}=\{x,y \in \R^n | 1-x\tp x=0, 1-y\tp y=0, x\tp y=0 \}$. \\
 It is not convex. Indeed, we will give two points $z_1$ and $z_2$ $\in S$, but such that $z=\lambda z_1 + (1-\lambda) z_2 \notin S$ for a given $\lambda$. We will work with these $z_i \in \R^2 \times \R^2$ i.e. $n=2$.\\
 
 
 \noindent We will take $z_1=(x_1,y_1)=((1,0),(0,1))$. First we check that $z_1 \in S$.
 \begin{itemize}
-\item $1-x_{1}^\top x_1=1-\left<\begin{pmatrix} 1\\ 0\end{pmatrix},\begin{pmatrix} 1\\ 0\end{pmatrix}\right>=1-1=0$
-\item $1-y_{1}^\top y_1=1-\begin{pmatrix} 0& 1\end{pmatrix}\begin{pmatrix} 0\\ 1\end{pmatrix}=1-1=0$
+\item $1-x_{1}\tp x_1=1-\left<\begin{pmatrix} 1\\ 0\end{pmatrix},\begin{pmatrix} 1\\ 0\end{pmatrix}\right>=1-1=0$
+\item $1-y_{1}\tp y_1=1-\begin{pmatrix} 0& 1\end{pmatrix}\begin{pmatrix} 0\\ 1\end{pmatrix}=1-1=0$
 \item $x_{1}\top y_1=\left<(1,0),(0,1)\right>=0$
 \end{itemize}
 And we will take $z_2=(x_2,y_2)=((0,1),(1,0))$. we also check that $z_2 \in S$.
 \begin{itemize}
-\item $1-x_{2}^\top x_2=1-\left<(0,1),(0,1)\right>=1-1=0$
-\item $1-y_{2}^\top y_2=1-\left<(1,0),(1,0)\right>=1-1=0$
+\item $1-x_{2}\tp x_2=1-\left<(0,1),(0,1)\right>=1-1=0$
+\item $1-y_{2}\tp y_2=1-\left<(1,0),(1,0)\right>=1-1=0$
 \item $x_{2}\top y_2=\left<(0,1),(1,0)\right>=0$
 \end{itemize}
 Lastly, we will take $\lambda=\frac{1}{2}$. Now we can compute our $z=\lambda z_1 + (1-\lambda) z_2$
 $$z=\lambda z_1 + (1-\lambda) z_2=\frac{1}{2}((1,0),(0,1))+\frac{1}{2}((0,1),(1,0))=((\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}))=(x,y)$$
-But if we compute $x^\top y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.\\
+But if we compute $x\tp y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.\\
 
 By definition, LICQ holds at $x\in S$ if and only if $\nabla h_1(x),\dots\nabla h_p(x)$, and $\nabla g_i(x)$ for $i\in \mathcal I(x) $ are linearly independant.\\
 Here, we do not have any constraint function $g_i$ but we have three functions $h_i$:
 \begin{itemize}
-\item  $h_1(x,y)=1-x^\top x$
-\item $h_2(x,y)=1-y^\top y$
-\item $h_3(x,y)= x^\top y$
+\item  $h_1(x,y)=1-x\tp x$
+\item $h_2(x,y)=1-y\tp y$
+\item $h_3(x,y)= x\tp y$
 \end{itemize} 
 If we compute their gradients, we get:\\
 TODO : revoir gradient : les calculs sont justes et après la matrice est fausse, jsp si ça change les résultats pour le lin indep
 \begin{itemize}
-\item  $\nabla_x h_1(x,y)=\nabla_x \left(1-x^\top x\right)= \nabla_x \left(1-\sum_{i=1}^n x_{i}^2 \right)=-2\vec x$  and $\nabla_y h_1(x,y)=0$ \\
+\item  $\nabla_x h_1(x,y)=\nabla_x \left(1-x\tp x\right)= \nabla_x \left(1-\sum_{i=1}^n x_{i}^2 \right)=-2\vec x$  and $\nabla_y h_1(x,y)=0$ \\
 
 $\qquad$ then $\nabla h_1(x,y)=
 \begin{bmatrix}
@@ -115,7 +116,7 @@ $\qquad$ then $\nabla h_1(x,y)=
 \vec{0}
 \end{bmatrix}
 $ where $\vec{0}$ is the vector $\vec{0} \in \R^n$.
-\item  $\nabla_x h_2(x,y)=0$ and $\nabla_y h_2(x,y)=\nabla_y \left(1-y^\top y\right)= \nabla_y \left(1-\sum_{i=1}^n y_{i}^2 \right)=-2\vec y$ \\
+\item  $\nabla_x h_2(x,y)=0$ and $\nabla_y h_2(x,y)=\nabla_y \left(1-y\tp y\right)= \nabla_y \left(1-\sum_{i=1}^n y_{i}^2 \right)=-2\vec y$ \\
 
 $\qquad$ then $\nabla h_2(x,y)=
 \begin{bmatrix}
@@ -135,24 +136,24 @@ $
 \end{itemize} 
 
 \noindent They are linearly independent:\\
-$\lambda_1 \nabla h_1(x,y)+\lambda_2\nabla h_2(x,y)+\lambda_3 \nabla h_3(x,y)=0 $ $\iff$ $- 2 \lambda_1 x + \lambda_3 y=0$ and  $\lambda_3 x -2 \lambda_2 y=0$. We have that this is true without having all the $\lambda_i=0$, if and only if $x=\lambda y$ (for some lambda that can be deduced from the previous equations), or $y=0$. But if $y=0$, we have $h_2(x,y)=1\neq 0$ so our point is not feasible. Same with $h_1$ if $x=0$. Lastly, if $x=\lambda y$ for $\lambda, x, y \neq 0$, we get that $h_3(x,y)=x^\top y=\lambda y^\top y=\lambda ||y|| \neq 0$, so our point is not feasible either.\\
+$\lambda_1 \nabla h_1(x,y)+\lambda_2\nabla h_2(x,y)+\lambda_3 \nabla h_3(x,y)=0 $ $\iff$ $- 2 \lambda_1 x + \lambda_3 y=0$ and  $\lambda_3 x -2 \lambda_2 y=0$. We have that this is true without having all the $\lambda_i=0$, if and only if $x=\lambda y$ (for some lambda that can be deduced from the previous equations), or $y=0$. But if $y=0$, we have $h_2(x,y)=1\neq 0$ so our point is not feasible. Same with $h_1$ if $x=0$. Lastly, if $x=\lambda y$ for $\lambda, x, y \neq 0$, we get that $h_3(x,y)=x\tp y=\lambda y\tp y=\lambda ||y|| \neq 0$, so our point is not feasible either.\\
 To conclude, we get that for all of our feasible points, i.e. the points in the set $S$, $ \nabla h_1(x,y), \nabla h_2(x,y), \nabla h_3(x,y)$ are linearly independent, which means by definition that LICQ holds.
 
 \section*{Question 2}
 
-Our two first constraints $h_1(x,y)=1-x^\top x =0$ and $h_2(x,y)=1-y^\top y =0$ can be rephrased $||x||=||y||=1$.\\
+Our two first constraints $h_1(x,y)=1-x\tp x =0$ and $h_2(x,y)=1-y\tp y =0$ can be rephrased $||x||=||y||=1$.\\
 We notice that there is no constraint on x and y at the same time, i.e. a constraint that tells us what x must be related to y and vice-versa. Similarly, we can notice that our function doesn't have a part where x and y are mixed.\\
 It means that if we optimized x and y separately, the optimum found will be the optimum for our relaxed problem as well. So we rewrite our relaxed problem as:
-$$\min_{x\in \R^n:||x||=1}  \frac{1}{2} x^\top A x +\min_{y \in \R^n:||y||=1} \frac{1}{2} y^\top B y$$
+$$\min_{x\in \R^n:||x||=1}  \frac{1}{2} x\tp A x +\min_{y \in \R^n:||y||=1} \frac{1}{2} y\tp B y$$
 The two problems are solved identically as the only thing changing is the matrix. To solve them, we first recall example 2.14 from the notes:\\
 If $A$ is a symmetric linear map with eigenvalues $\lambda_1, ...,\lambda_n$, then $\forall u \in \mathcal{E}$, we have $$\lambda_{\min} ||u||^2 \leq \left< u, A(u)\right>\leq \lambda_{\max}||u||^2$$
 and by rewriting the scalar product we get 
-$$\lambda_{\min} ||u||^2 \leq u^\top A u \leq \lambda_{\max} ||u||^2$$
+$$\lambda_{\min} ||u||^2 \leq u\tp A u \leq \lambda_{\max} ||u||^2$$
 Applied to our problems (let's look at the first as they are similar), knowing that we optimize on vector of norm 1, we get that for every feasible $x$, we have
-$$\frac{1}{2}\lambda_{\min}  \leq\frac{1}{2} x^\top A x \leq\frac{1}{2} \lambda_{\max} $$
+$$\frac{1}{2}\lambda_{\min}  \leq\frac{1}{2} x\tp A x \leq\frac{1}{2} \lambda_{\max} $$
 It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{\min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it:\\
 As $\lambda_{\min}$ is an eigenvalue, it means that $\exists v_{\min} \in \R^n, v_{\min} \neq 0$ such that $A v_{\min}=\lambda_{\min} v_{\min}$. We take $x=\frac{v_{\min}}{||v_{\min}||}$, and then we have
-$$x^\top A x =\frac{1}{||v_{\min}||^2} v_{\min}^\top \left( A v_{\min} \right)=\frac{1}{||v_{\min}||^2} v_{\min}^\top (\lambda_{\min} v_{\min})=\frac{\lambda_{\min}}{||v_{\min}||^2} v_{\min}^\top v_{\min}=\frac{\lambda_{\min}}{||v_{\min}||^2} \cdot ||v_{\min}||^2=\lambda_{\min}$$
+$$x\tp A x =\frac{1}{||v_{\min}||^2} v_{\min}\tp \left( A v_{\min} \right)=\frac{1}{||v_{\min}||^2} v_{\min}\tp (\lambda_{\min} v_{\min})=\frac{\lambda_{\min}}{||v_{\min}||^2} v_{\min}\tp v_{\min}=\frac{\lambda_{\min}}{||v_{\min}||^2} \cdot ||v_{\min}||^2=\lambda_{\min}$$
 So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{\min} $, which means our bound is attained, which means it is the optimal value. \\
 We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
 
@@ -160,11 +161,11 @@ We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues 
 \section*{Question 3}
 Let's find an expression for the Lagrangian function $L(x,y,\mu)$. We denote $I_n$ for the identity matrix in $\R^{n\times n}$.
 \begin{align*}
-L(x,y,\mu) &= f(x,y)+\mu^\top h(x,y) \\
+L(x,y,\mu) &= f(x,y)+\mu\tp h(x,y) \\
 &=\fxy  + \begin{bmatrix} \mu_1 &\mu_2 & \mu_3 \end{bmatrix} \hxy \\
-&=\fxy + \mu_1(1-x^\top x) +\mu_2(1-y^\top y) + \mu_3 x^\top y \\
-&= \dfrac{1}{2}\left(x^\top A x - 2\mu_1 x^\top x +  y^\top B y -2\mu_2 y^\top y + 2\mu_3 x^\top y\right) + \mu_1+\mu_2 \\
-&= \dfrac{1}{2} \begin{bmatrix} x^\top & y^\top\end{bmatrix}
+&=\fxy + \mu_1(1-x\tp x) +\mu_2(1-y\tp y) + \mu_3 x\tp y \\
+&= \dfrac{1}{2}\left(x\tp A x - 2\mu_1 x\tp x +  y\tp B y -2\mu_2 y\tp y + 2\mu_3 x\tp y\right) + \mu_1+\mu_2 \\
+&= \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}
 \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}
 \begin{bmatrix} x \\ y \end{bmatrix} +\mu_1+\mu_2 
@@ -177,8 +178,8 @@ By definition, $L_D(\mu)=\inf\limits_{x,y\in\R^n} L(x,y,\mu)$. Using the previou
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}$, we find:
 \begin{align*}
 L_D(\mu)&=\inf\limits_{x,y\in\R^n} L(x,y,\mu) \\
-&=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x^\top & y^\top\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} +\mu_1+\mu_2 \right\rbrace \\
-&=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x^\top & y^\top\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} \right\rbrace+\mu_1+\mu_2   \\
+&=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} +\mu_1+\mu_2 \right\rbrace \\
+&=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} \right\rbrace+\mu_1+\mu_2   \\
 &=\begin{cases} \mu_1+\mu_2 &\text{ if }M_\mu\succeq 0 \\ -\infty &\text{ else} \end{cases}
 \end{align*}
 Hence we can write the dual as:
@@ -214,24 +215,24 @@ $$-\begin{bmatrix}Ax^* \\ By^*\end{bmatrix}
 $$
 This gives the system $\begin{cases} -Ax^* = -2\mu_1 x^* +\mu_3 y^* \\
 -By^* = -2\mu_2 y^* +\mu_3 x^*\end{cases}.$ \\
-Injecting $\mu^* = \left( \frac{\lambda_{\min} (A)}{2}, \frac{\lambda_{\min} (B)}{2}, 0)^\top\right)$, this gives:
+Injecting $\mu^* = \left( \frac{\lambda_{\min} (A)}{2}, \frac{\lambda_{\min} (B)}{2}, 0)\tp\right)$, this gives:
 $$\begin{cases} Ax^* = \lambda_{\min}(A) x^* \\
 By^* = \lambda_{\min}(B) y^* \end{cases}.$$
 So we may take $(x^*,  y^*) = (v_{\min }(A), v_{\min} (B))$, where $v_{\min }(A)$ and $v_{\min }(B)$ are the unit-normed eigenvectors of $\lambda_{\min}(A)$ and $\lambda_{\max}(B)$ respectively. \\
-At this point, we need to recall that $(x^*,y^*)$ must belong to the set $S$, or equivalently we must have $h(x^*,y^*)=0$. By taking unit-normed eigenvectors, we ensure that $h_1(x^*,y^*)=0=h_2(x^*,y^*)$. The last condition is $h_3(x^*,y^*) = 0$. By definition of $h_3$, this means $(x^*)^\top y^* = 0$, i.e. $x^*$ and $y^*$ need to be orthogonal in $\R^n$. This is the only assumption we do not know, but observe that as soon as we know it the previous reasoning implies that the assumptions of the strong duality theorem are satisfied.\\
+At this point, we need to recall that $(x^*,y^*)$ must belong to the set $S$, or equivalently we must have $h(x^*,y^*)=0$. By taking unit-normed eigenvectors, we ensure that $h_1(x^*,y^*)=0=h_2(x^*,y^*)$. The last condition is $h_3(x^*,y^*) = 0$. By definition of $h_3$, this means $(x^*)\tp y^* = 0$, i.e. $x^*$ and $y^*$ need to be orthogonal in $\R^n$. This is the only assumption we do not know, but observe that as soon as we know it the previous reasoning implies that the assumptions of the strong duality theorem are satisfied.\\
 
 Hence, we can always find $\mu^*\in\R^3$ such that $(\text{A}2)$ is satisfied, but we cannot always ensure that $(\text{A}1)$ is satisfied. One condition that can ensure it however, is that the eigenvectors of $A$ and $B$ corresponding to their smallest eigenvalues are orthogonal. We can not expect to have this before solving the problem if we don't have specific informations about $A$ and $B$ other that them being symmetric.
 
 \begin{comment}
 In particular, taking the scalar product of the first equality with $x^*$ and of the second one with $y^*$ and using that $h(x^*, y^*)=0$, gives a new system : 
-$$\begin{cases} -(x^*)^\top Ax^* = -2\mu_1 (x^*)^\top x^* +\mu_3 (x^*)^\top y^* \\
--(y^*)^\top By^* = -2\mu_2(y^*)^\top y^* +\mu_3(y^*)^\top x^*\end{cases}
+$$\begin{cases} -(x^*)\tp Ax^* = -2\mu_1 (x^*)\tp x^* +\mu_3 (x^*)\tp y^* \\
+-(y^*)\tp By^* = -2\mu_2(y^*)\tp y^* +\mu_3(y^*)\tp x^*\end{cases}
 \iff 
-\begin{cases} -(x^*)^\top Ax^* = -2\mu_1\\
--(y^*)^\top By^* = -2\mu_2\end{cases}
+\begin{cases} -(x^*)\tp Ax^* = -2\mu_1\\
+-(y^*)\tp By^* = -2\mu_2\end{cases}
 \iff 
-\begin{cases} (x^*)^\top (A -2\mu_1 I)x^* = 0\\
-(y^*)^\top (B-2\mu_2 I)y^* =0 \end{cases}
+\begin{cases} (x^*)\tp (A -2\mu_1 I)x^* = 0\\
+(y^*)\tp (B-2\mu_2 I)y^* =0 \end{cases}
 $$
 \end{comment}
 
@@ -240,53 +241,152 @@ $$
 
 We will first compute the gradient with respect to x. $\nabla_y$ will be done similarly.\\
 First of all, we know, by linearity, that 
-$$\nabla_x L_{\beta}(x,y,\mu)=\nabla_x f(x,y) + \nabla_x \mu^\top h(x,y)+ \frac{\beta}{2} \nabla_x ||h(x)||^2$$
+$$\nabla_x L_{\beta}(x,y,\mu)=\nabla_x f(x,y) + \nabla_x \mu\tp h(x,y)+ \frac{\beta}{2} \nabla_x ||h(x)||^2$$
 We will compute each of these expressions:\\
 \begin{align*}
-\p f(x,y)&=\frac{1}{2} \p x^\top A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
+\p f(x,y)&=\frac{1}{2} \p x\tp A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
 &=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
 \end{align*}
 As $\p f(x,y)$ is the $i$-th element of $\nabla_x f$, we get that $\nabla_x f= Ax$ \\
 
-Now for the second one, we can develop $\mu^\top h(x,y)=\mu_1 (1-x\top x)+\mu_2(1-y^\top y) + \mu_3 x^\top y$, so we have:
+Now for the second one, we can develop $\mu\tp h(x,y)=\mu_1 (1-x\top x)+\mu_2(1-y\tp y) + \mu_3 x\tp y$, so we have:
 \begin{align*}
-\nabla_x \mu^\top h(x,y)&=\nabla_x (\mu_1 (1-x\top x))+\nabla_x (\mu_2(1-y^\top y)) +\nabla_x ( \mu_3 x^\top y)\\
-&=\mu_1 \nabla_x (1-x\top x) + \mu_3 \nabla_x ( x^\top y)\\
+\nabla_x \mu\tp h(x,y)&=\nabla_x (\mu_1 (1-x\top x))+\nabla_x (\mu_2(1-y\tp y)) +\nabla_x ( \mu_3 x\tp y)\\
+&=\mu_1 \nabla_x (1-x\top x) + \mu_3 \nabla_x ( x\tp y)\\
 &= \mu_1 (-2x) + \mu_3 y\\
 &= - 2\mu_1 x+\mu_3 y
 \end{align*}
-As $\p(x^\top x)=\p \sum_{i=1}^n x_i^2=2x_i$ and  $\p(x^\top y)=\p \sum_{i=1}^n x_i y_i=y_i$\\
+As $\p(x\tp x)=\p \sum_{i=1}^n x_i^2=2x_i$ and  $\p(x\tp y)=\p \sum_{i=1}^n x_i y_i=y_i$\\
 
-Now for the third part we will use the fact that $\nabla||x||^2=2x$ as $x^\top x=||x||^2$ and we've just computed it before. Plus we know the chain rule: $\p f\circ g(x)= \nabla f (g(x)) \cdot \p g(x)$. We can use it to compute our $\nabla$ :
+Now for the third part we will use the fact that $\nabla||x||^2=2x$ as $x\tp x=||x||^2$ and we've just computed it before. Plus we know the chain rule: $\p f\circ g(x)= \nabla f (g(x)) \cdot \p g(x)$. We can use it to compute our $\nabla$ :
 \begin{align*}
 \p \frac{\beta}{2} ||h(x,y)||^2&=\beta h(x,y) \cdot \p(h(x,y))\\
 \end{align*}
 which gives us the formula
 \begin{align*}
 \nabla_x \frac{\beta}{2} ||h(x,y)||^2&=\beta \nabla_x h(x,y) \cdot  h(x,y) \text{ where } \nabla_x h(x,y) \text{ is a n} \times \text{3 matrix}\\
-&=\beta\begin{bmatrix} -2x & \vec 0 & y \end{bmatrix}   \cdot \begin{bmatrix} 1-x^\top x \\ 1-y^\top y\\ x^\top y \end{bmatrix} \\
-&=\beta\begin{bmatrix}2(x^\top x-1) x_1+(x^\top y )y_1\\ \dots \\ 2(x^\top x-1) x_n+(x^\top y )y_n \end{bmatrix}\\
-&=\beta \left( 2(x^\top x-1)  x+(x^\top y ) y \right) 
+&=\beta\begin{bmatrix} -2x & \vec 0 & y \end{bmatrix}   \cdot \begin{bmatrix} 1-x\tp x \\ 1-y\tp y\\ x\tp y \end{bmatrix} \\
+&=\beta\begin{bmatrix}2(x\tp x-1) x_1+(x\tp y )y_1\\ \dots \\ 2(x\tp x-1) x_n+(x\tp y )y_n \end{bmatrix}\\
+&=\beta \left( 2(x\tp x-1)  x+(x\tp y ) y \right) 
 \end{align*}
 
 Putting together our three calculations, we get
 \begin{align*}
-\nabla_x L_\beta(x,y,\mu)&=Ax - 2\mu_1 x+\mu_3 y+\beta \left( 2(x^\top x-1) x+(x^\top y ) y \right) \\
-&=Ax+ 2(\beta (x^\top x-1) - \mu_1) x +(\beta \cdot x^\top y + \mu_3)y
+\nabla_x L_\beta(x,y,\mu)&=Ax - 2\mu_1 x+\mu_3 y+\beta \left( 2(x\tp x-1) x+(x\tp y ) y \right) \\
+&=Ax+ 2(\beta (x\tp x-1) - \mu_1) x +(\beta \cdot x\tp y + \mu_3)y
 \end{align*}
 
 Similarly, we get
 \begin{align*}
-\nabla_y L_\beta(x,y,\mu)&=By - 2\mu_2 y+\mu_3 x+\beta \left( 2(y^\top y-1)  y+(x^\top y ) x \right) \\
-&=(\beta \cdot x^\top y + \mu_3)x+ By + 2(\beta (y^\top y-1) - \mu_2) y
+\nabla_y L_\beta(x,y,\mu)&=By - 2\mu_2 y+\mu_3 x+\beta \left( 2(y\tp y-1)  y+(x\tp y ) x \right) \\
+&=(\beta \cdot x\tp y + \mu_3)x+ By + 2(\beta (y\tp y-1) - \mu_2) y
 \end{align*}
 
 
 \section*{Question 8}
 
+We indeed wrote code that takes as input $z = [x\tp, y\tp]\tp,\ \mu,\ \beta$ (and also $A$ and $B$) and returns $L_\beta(z, \mu)$ and $\nabla_z L_\beta(z, \mu)$.
+Our function is named \mcode{LBetaValAndGrad} as it calls the two sub-functions we are showing here: \mcode{LBeta} and \mcode{LBetaGrad}
 
 
+\lstinputlisting{../LBeta.m}
 
+\lstinputlisting{../LBetaGrad.m}
+
+Those functions use the implemented functions \mcode{f} and \mcode{h} which are a direct implementation of their definition.
+
+\section*{Question 9}
+
+We have used the Matlab \mcode{fminunc} function. !!TODO!! Think whether to use 'Quasi-Newton' or 'Trust-region', maybe with algorithmic time?
+We have created a function \mcode{minXY} which calls the precedent function with the good parameters.\\
+Here is our implementation.
+
+\lstinputlisting{../minXY.m}
+
+In the \mcode{main.m}, we defined a function handle which allow us to invoke \mcode{minXY} easily, and which does not output anything in the console.\\
+\mcode{silentMinXY = @(mu, beta, z0) minXY(mu, beta, A, B, z0, 0);}\\
+This function with $\beta = 1.42$, $\mu = [1, 2, -3]\tp$ and initial guess $z_0 = [1, 0, -1, 2, 1, 1, 2, 0, 1, 2]\tp$  gives after 50 iterations
+\begin{lstlisting}
+Found x and y are
+   -1.3695   -1.2693
+   -0.2535    0.9636
+   -0.0107   -1.0786
+    0.0825    0.7410
+    1.4721    0.5569
+
+with value f(x, y) = -28.9565
+and LBeta(x, y, mu) = -26.4171
+and h(x, y), mu:
+   -3.1138    1.0000
+   -3.5622    2.0000
+    2.3865   -3.0000
+\end{lstlisting}
+
+Note that the results are a little bit different if we are using 'Trust-region'. !!TODO!!
+
+
+\section*{Question 10}
+The part of the \mcode{main} running the Quadratic penalty method is the following:
+\lstinputlisting[firstline=63, lastline=83]{../main.m}
+
+The final iteration leaves:
+\begin{lstlisting}
+Iteration 9 with beta = 256.
+We found x and y:
+   -0.6036    0.4636
+   -0.2996   -0.3649
+    0.3370    0.6272
+   -0.1038   -0.4992
+    0.6591   -0.1458
+
+with value f(x, y) = -6.41
+   LBeta(x, y, mu) = -6.3694
+and h(x, y), beta*h(x, y):
+   -0.0128   -3.2785
+   -0.0119   -3.0504
+   -0.0033   -0.8566
+
+which have norms
+    0.0178    4.5593
+\end{lstlisting}
+
+We notice that the norme of $h(x, y)$ is divided by two at each iterations, since $\beta h(x, y)$ stays almost constant.
+This confirms---as we have seen in the lecture notes; we could hope---that $h(x_k) \approx \frac{\mu^*}{\beta_k}$. This seems indeed to be the case, as we will see in question 11.\\
+We see that after 9 iterations, the points $x$ and $y$ still \textit{far} from $h(x, y) = 0$. That's why we consider the augmented Lagrangian method.
+
+
+\section*{Question 11}
+The part of the \mcode{main} running the augmented Lagrangian method is the following:
+\lstinputlisting[firstline=91, lastline=113]{../main.m}
+
+Note that the only difference is the update of $\mu$ at line 10.
+The final iteration leaves:
+\begin{lstlisting}
+Iteration 9 with beta = 256.
+We found x and y:
+   -0.5988    0.4605
+   -0.2988   -0.3626
+    0.3372    0.6237
+   -0.1041   -0.4965
+    0.6539   -0.1447
+
+with value f(x, y) = -6.3288
+   LBeta(x, y, mu) = -6.3288
+and h(x, y), new mu:
+   -0.0000   -3.2774
+    0.0000   -3.0515
+    0.0000   -0.8582
+
+which have norms
+    0.0000    4.5595
+\end{lstlisting}
+
+This time, $h(x, y)$ goes to 0 really quickly. Moreover, we see that our estimation of $\mu$ quickly stabilizes to a fixed value--- which we know is $\mu^*$--- which is indeed the one $\beta h(x, y)$ was converging to with the Quadratic penalty method.
+
+
+\section*{Question 12}
+
+Je suis beaucoup trop fatigué...
 
 
 \end{document}
