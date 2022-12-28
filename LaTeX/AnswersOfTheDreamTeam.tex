@@ -246,10 +246,10 @@ First of all, we know, by linearity, that
 $$\nabla_x L_{\beta}(x,y,\mu)=\nabla_x f(x,y) + \nabla_x \mu\tp h(x,y)+ \frac{\beta}{2} \nabla_x ||h(x)||^2$$
 We will compute each of these expressions:\\
 \begin{align*}
-\p f(x,y)&=\frac{1}{2} \p x\tp A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{j,k=1 : j,k\neq1}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)\\
-&=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{j=1 : j\neq i}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
+\p f(x,y)&=\frac{1}{2} \p x\tp A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{\substack{j,k=1\\ j,k\neq i}}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)\\
+&=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
 \end{align*}
-As $\p f(x,y)$ is the $i$-th element of $\nabla_x f$, we get that $\nabla_x f= Ax$ \\
+As $\p f(x,y)$ is the $i$-th element of $\nabla_x f(x,y)$, we get that $\nabla_x f(x,y)= Ax$ \\
 
 Now for the second one, we can develop $\mu\tp h(x,y)=\mu_1 (1-x\top x)+\mu_2(1-y\tp y) + \mu_3 x\tp y$, so we have:
 \begin{align*}
@@ -268,7 +268,7 @@ which gives us the formula
 \begin{align*}
 \nabla_x \frac{\beta}{2} ||h(x,y)||^2&=\beta \nabla_x h(x,y) \cdot  h(x,y) \text{ where } \nabla_x h(x,y) \text{ is a n} \times \text{3 matrix}\\
 &=\beta\begin{bmatrix} -2x & \vec 0 & y \end{bmatrix}   \cdot \begin{bmatrix} 1-x\tp x \\ 1-y\tp y\\ x\tp y \end{bmatrix} \\
-&=\beta\begin{bmatrix}2(x\tp x-1) x_1+(x\tp y )y_1\\ \dots \\ 2(x\tp x-1) x_n+(x\tp y )y_n \end{bmatrix}\\
+&=\beta\begin{bmatrix}2(x\tp x-1) x_1+(x\tp y )y_1\\ \vdots \\ 2(x\tp x-1) x_n+(x\tp y )y_n \end{bmatrix}\\
 &=\beta \left( 2(x\tp x-1)  x+(x\tp y ) y \right) 
 \end{align*}
 
