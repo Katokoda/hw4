@@ -201,7 +201,21 @@ To use the strong duality theorem, we need to satisfy the two following assumpti
 (\text{A}2) &  \text{ the function } (x,y)\mapsto L(x,y,\mu^*) \text{ is convex}
 \end{align*}
 
-Consider $\mu_1^*=\lambda_{\min} (A)/2$, $\mu_2^*=\lambda_{\min} (B)/2$ and $\mu_3^*=0$. We will try to find $x^*$ and $y^*$ a little later.\\
+\noindent First, let's prove that $(\text{A}1)$ holds.
+
+We will use the theorem 8.26 of the lecture notes, as we know by question 1 that LICQ holds at all feasible points. It remains to show that there exists a local minimum of $f$ in $S$.
+ 
+Observe that $S=\{(x,y)\in\R^n\times\R^n \mid h(x,y)=0\}$ is a closed set as a preimage of the closed set $\{0\}\subset \R$ by the continuous function $h$. Moreover, we have $S\subset \{(x, y)\in\R^n\times\R^n \mid h_1(x,y)=0, h_2(x,y)=0\} = \partial B_1(0)\times \partial B_1(0)$, where $B_1(0)=\{z\in\R^n\mid ||z||<1\}$ is the unit ball in $\R^n$. Hence $S$ is bounded. So we deduce that it is compact (as it is closed and bounded in $\R^n\times\R^n=\R^{2n}$).
+ 
+ Now $f$ is continuous on the compact set $S$, thus it must attains its (global) minimum in it, say at a point ($x^*,y^*)$. The theorem 8.26 implies that $(x^*,y^*)$ is a KKT point (as LICQ holds in particular at this point).
+ Let $\mu^*\in\R^3$ be valid Lagrange multipliers for $(x^*,y^*)$.\\
+ 
+\noindent Consider now the condition $(\text{A}2)$. It is equivalent to $\begin{bmatrix} A-2\mu^*_1 I_n & \mu^*_3 I_n \\
+\mu^*_3 I_n & B-2\mu^*_2 I_n \end{bmatrix}$ being positive semi-definite. Now for this latter condition to be satisfied, we would need information about $\mu^*$. But we can't expect to have those informations before solving the problem, as we need to solve it to find $(x^*,y^*)$.
+ 
+
+\begin{comment}% en fait c'était un peu de la merde ce que j'avais écrit
+Consider $\mu_1^*=\lambda_{\min} (A)/2$, $\mu_2^*=\lambda_{\min} (B)/2$ and $\mu_3^*=0$.\\
 
 \noindent First, consider the condition $(\text{A}2)$. Let $L_{\mu^*}(x,y) = L(x,y,\mu^*)$. By an analogous reasoning as for the previous point, the matrix $M_{\mu^*}=\nabla^2(L_{\mu^*}(x,y)$ is positive semi-definite. Hence by a theorem of the course, $L_{\mu^*}$ is convex. So $(\text{A}2)$ holds for this choice of $\mu^*$.\\
 
@@ -224,19 +238,8 @@ So we may take $(x^*,  y^*) = (v_{\min }(A), v_{\min} (B))$, where $v_{\min }(A)
 At this point, we need to recall that $(x^*,y^*)$ must belong to the set $S$, or equivalently we must have $h(x^*,y^*)=0$. By taking unit-normed eigenvectors, we ensure that $h_1(x^*,y^*)=0=h_2(x^*,y^*)$. The last condition is $h_3(x^*,y^*) = 0$. By definition of $h_3$, this means $(x^*)\tp y^* = 0$, i.e. $x^*$ and $y^*$ need to be orthogonal in $\R^n$. This is the only assumption we do not know, but observe that as soon as we know it the previous reasoning implies that the assumptions of the strong duality theorem are satisfied.\\
 
 Hence, we can always find $\mu^*\in\R^3$ such that $(\text{A}2)$ is satisfied, but we cannot always ensure that $(\text{A}1)$ is satisfied. One condition that can ensure it however, is that the eigenvectors of $A$ and $B$ corresponding to their smallest eigenvalues are orthogonal. We can not expect to have this before solving the problem if we don't have specific informations about $A$ and $B$ other that them being symmetric.
-
-\begin{comment}
-In particular, taking the scalar product of the first equality with $x^*$ and of the second one with $y^*$ and using that $h(x^*, y^*)=0$, gives a new system : 
-$$\begin{cases} -(x^*)\tp Ax^* = -2\mu_1 (x^*)\tp x^* +\mu_3 (x^*)\tp y^* \\
--(y^*)\tp By^* = -2\mu_2(y^*)\tp y^* +\mu_3(y^*)\tp x^*\end{cases}
-\iff 
-\begin{cases} -(x^*)\tp Ax^* = -2\mu_1\\
--(y^*)\tp By^* = -2\mu_2\end{cases}
-\iff 
-\begin{cases} (x^*)\tp (A -2\mu_1 I)x^* = 0\\
-(y^*)\tp (B-2\mu_2 I)y^* =0 \end{cases}
-$$
 \end{comment}
+
 
 
 \section*{Question 7}
