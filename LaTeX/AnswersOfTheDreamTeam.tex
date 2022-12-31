@@ -70,7 +70,7 @@ ce devoir, Sam'enchante pas, vous?\\
 
 We want to solve the following problem:
 \begin{equation*} \tag{P}\label{P}
-\min_{x,y\in\R^n} \text{ subject to } h(x,y)=0,
+\min_{x,y\in\R^n} f(x, y) \text{ subject to } h(x,y)=0,
 \end{equation*}
 where $f$ and $h$ are specified on the homework sheet.
 
@@ -396,25 +396,41 @@ Note that depending on the starting points, the sign of the values may differ. B
 \section*{Question 12}
 
 Our program finds  
-$\mu =
+$\begin{pmatrix}
+\mu_1\\
+\mu_2\\
+\mu_3
+\end{pmatrix} =
 \begin{pmatrix}
 -3.2774\\
 -3.0515\\
 \pm 0.8582
-\end{pmatrix}$. We will work with $+ 0.8582$ for simplicity.
+\end{pmatrix}$. The sign of the last value varies, but this is not important for the rest of our calculations.
 
-This makes the Lagrangian function be 
-\begin{align*}
-L : (x, y) \mapsto &f(x, y) - 3.2774 (1 - x\tp x) - 3.0515 (1 - y\tp y) + 0.8582 x\tp y\\
-&= f(x, y) + 3.2774 x\tp x + 3.0515 y\tp y + 0.8582 x\tp y -6.3288
-\end{align*}
-
-We can also write this
-$ \dfrac{1}{2}
+We know from question 3 that the Lagrangian is\\
+$ L(x, y, \mu) = \dfrac{1}{2}
 \begin{bmatrix} x\tp & y\tp\end{bmatrix}
 \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}
 \begin{bmatrix} x \\ y \end{bmatrix}
-- 6.3288 $, using question 3.
+- 6.3288 $.
+
+We know that this function is convex only if the matrix---that we named $M_\mu$ in question 4---is positive semi-definite.
+In our main, the following lines are calculating the minimum eigenvalue of $M_\mu$ and outputs a warning in the console.
+
+\lstinputlisting[firstline=134, lastline=140]{../main.m}
+
+As this warning is triggered by our value of $\mu$, we conclude that $\mu$ is not feasible in (D). That is bad news, since our hope was that $\mu^k$ goes to $\mu^*$ as our algorithm progresses, and since $\mu$ seems\footnote{$\mu$ should be the limit of our calculated sequence $\mu^k$. In practice, we stop at $\mu^9$. Two things motivate this choice. First, the value of $\mu^k$ rapidly converged, and, as the associated value $h(x^k)$ is really close to zero at that point, the value of $\mu^k$ should stay unchanged. But secondly, as $\beta$ increases if we do too much iterations, small calculation residues in $h(x^k)$ will be drastically amplified and will change $\mu^k$ and reach extreme values.} to be the limit of $\mu^k$. Note that if $\mu$ was feasible, then $\mu_1 + \mu_2 = -6.3288$ would be a lower bound for the value $f(x, y)$ from the weak duality theorem, and we could conclude that our found $(x, y)$ (which reached this value) is a global minimum.
+
+\pagebreak
+========================================================\\
+Le groupe de Léo dit qqch qui ne me convient pas du tout.
+\begin{quote}
+"We can see that the conditions of the strong duality theorem are not verified.\\
+This is very clear when we compute the gap between the primal and the dual."\\
+suivit de qqch qui ressemble à\\
+\textit{the gap between the theoretical maximum for (D) and our \textbf{local} minimum of (P)  if 0.466.}
+\end{quote}
+Ils argumentent pas que les conditions sont vérifiées ou pas, ils tentent de montrer que les conséquences ne tiennemt pas. Le truc c'est qu'ils ne peuvent pas savoir si c'est un minimum global ou pas...
 
 \end{document}

@@ -118,7 +118,7 @@ if N > 30
     disp("When Beta is too big the stored value of mu will get turbulent.")
 end
 
-disp("Our obtained value for the Dual problem is mu_1 + mu_2 = " + (mu(1) + mu(2)))
+disp("Our obtained value for the Dual problem (D) is mu_1 + mu_2 = " + (mu(1) + mu(2)))
 lambdaA = min(eig(A));
 lambdaB = min(eig(B));
 if 2 * mu(1) > lambdaA
@@ -128,14 +128,18 @@ if 2 * mu(2) > lambdaB
     disp("But 2 * mu(2) > lambda_min(B): " + (2 * mu(2)) + " > " + lambdaB)
 end
 if 2 * mu(1) <= lambdaA ||  2 * mu(2) <= lambdaB
-    disp("And mu is valid in the dual")
+    disp("And mu is valid in the dual.")
 end
 
 I = eye(5);
 M = [A - 2 * mu(1) * I, mu(3) * I; mu(3) * I, B - 2 * mu(2) * I];
 lambdaM = min(eig(M));
 if lambdaM < 0
-    disp("Therefore, M_mu is not semi-positive definite.")
+    disp("Therefore, M_mu is not semi-positive definite,")
+    disp("and mu is not feasible in (D).")
 else
-    disp("Since M_mu is semi-positive definite.")
+    disp("<=> M_mu is semi-positive definite.")
 end
+
+disp(newline + "Note that the theoretical maximal value for (D) is:")
+disp("(lambda_min(A) + lambda_min(B))/2 = " + (lambdaA + lambdaB)/2)
