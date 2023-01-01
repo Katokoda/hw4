@@ -118,7 +118,7 @@ if N > 30
     disp("When Beta is too big the stored value of mu will get turbulent.")
 end
 
-disp("Our obtained value for the Dual problem (D) is mu_1 + mu_2 = " + (mu(1) + mu(2)))
+disp("Our (hopefully feasible) obtained value for the Dual problem (D) is mu_1 + mu_2 = " + (mu(1) + mu(2)))
 lambdaA = min(eig(A));
 lambdaB = min(eig(B));
 if 2 * mu(1) > lambdaA
@@ -135,6 +135,7 @@ I = eye(5);
 M = [A - 2 * mu(1) * I, mu(3) * I; mu(3) * I, B - 2 * mu(2) * I];
 lambdaM = min(eig(M));
 if lambdaM < 0
+	disp("lambda_min(M_mu) = " + lambdaM)
     disp("Therefore, M_mu is not semi-positive definite,")
     disp("and mu is not feasible in (D).")
 else

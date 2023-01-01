@@ -55,18 +55,10 @@ x\tp y
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Homework 4 - Continuous Optimization}
-\author{\xcancel{Estelle} Ezra Baup, Samuel Bélisle, Cassandre Renaud }
+\author{Estelle Baup, Samuel Bélisle, Cassandre Renaud }
 
 \begin{document}
 \maketitle
-
-\begin{quote}
-Faudra pas oublier de mettre nos noms "comme il faut". J'ai juste voulu éviter de renforcer ma tite tête avec ton nom \textit{officiel} à chaque fois que  je lis cette ligne.
-\flushright -Sam
-\end{quote}
-holà les gus \\
-ce devoir, Sam'enchante pas, vous?\\
-(un peu cass-é comme blague je l'avoue, mais gardez ez-poir en moi please)\\\\\\
 
 We want to solve the following problem:
 \begin{equation*} \tag{P}\label{P}
@@ -76,27 +68,72 @@ where $f$ and $h$ are specified on the homework sheet.
 
 \section*{Question 1}
 
-NOTE/TODO je suis pas du tout sure que cette notation est très belle ducoup dites si vous voulez changer. Aussi c'est très moche les produit scalaires "horizontaux" mais plus lisible? jsp\\
 
-The feasible set is $S=\{x,y \in \R^n | h(x,y)=0\}=\{x,y \in \R^n | 1-x\tp x=0, 1-y\tp y=0, x\tp y=0 \}$. \\
+The feasible set is $S=\{x,y \in \R^n \mid h(x,y)=0\}=\{x,y \in \R^n \mid 1-x\tp x=0,\ 1-y\tp y=0,\ x\tp y=0 \}$. \\
 It is not convex. Indeed, we will give two points $z_1$ and $z_2$ $\in S$, but such that $z=\lambda z_1 + (1-\lambda) z_2 \notin S$ for a given $\lambda$. We will work with these $z_i \in \R^2 \times \R^2$ i.e. $n=2$.\\
 
 
-\noindent We will take $z_1=(x_1,y_1)=((1,0),(0,1))$. First we check that $z_1 \in S$.
+\noindent We will take $x_1 = \begin{pmatrix} 1\\ 0\end{pmatrix},\ y_1 = \begin{pmatrix} 0\\ 1\end{pmatrix}$ and write $z_1 = (x_1, y_1)$. First we check that $z_1 \in S$.
 \begin{itemize}
-\item $1-x_{1}\tp x_1=1-\left<\begin{pmatrix} 1\\ 0\end{pmatrix},\begin{pmatrix} 1\\ 0\end{pmatrix}\right>=1-1=0$
-\item $1-y_{1}\tp y_1=1-\begin{pmatrix} 0& 1\end{pmatrix}\begin{pmatrix} 0\\ 1\end{pmatrix}=1-1=0$
-\item $x_{1}\top y_1=\left<(1,0),(0,1)\right>=0$
+\item $1-x_{1}\tp x_1=
+1-
+\begin{pmatrix} 1& 0\end{pmatrix}
+\begin{pmatrix} 1\\ 0\end{pmatrix}
+=1-1=0$
+\item $1-y_{1}\tp y_1=
+1-
+\begin{pmatrix} 0& 1\end{pmatrix}
+\begin{pmatrix} 0\\ 1\end{pmatrix}
+=1-1=0$
+\item $x_{1}\top y_1=
+\begin{pmatrix} 1& 0\end{pmatrix}
+\begin{pmatrix} 0\\ 1\end{pmatrix}
+=0$
 \end{itemize}
-And we will take $z_2=(x_2,y_2)=((0,1),(1,0))$. we also check that $z_2 \in S$.
+And we will take $z_2=(x_2,y_2)= \left(
+\begin{pmatrix} 0\\ 1\end{pmatrix},
+\begin{pmatrix} 1\\ 0\end{pmatrix}
+\right)$. We also check that $z_2 \in S$.
 \begin{itemize}
-\item $1-x_{2}\tp x_2=1-\left<(0,1),(0,1)\right>=1-1=0$
-\item $1-y_{2}\tp y_2=1-\left<(1,0),(1,0)\right>=1-1=0$
-\item $x_{2}\top y_2=\left<(0,1),(1,0)\right>=0$
+\item $1-x_{2}\tp x_2
+=1-
+\begin{pmatrix} 0& 1\end{pmatrix}
+\begin{pmatrix} 0\\ 1\end{pmatrix}
+=1-1=0$
+\item $1-y_{2}\tp y_2
+=1-
+\begin{pmatrix} 1& 0\end{pmatrix}
+\begin{pmatrix} 1\\ 0\end{pmatrix}
+=1-1=0$
+\item $x_{2}\tp y_2
+=
+\begin{pmatrix} 0& 1\end{pmatrix}
+\begin{pmatrix} 1\\ 0\end{pmatrix}
+=0$
 \end{itemize}
-Lastly, we will take $\lambda=\frac{1}{2}$. Now we can compute our $z=\lambda z_1 + (1-\lambda) z_2$
-$$z=\lambda z_1 + (1-\lambda) z_2=\frac{1}{2}((1,0),(0,1))+\frac{1}{2}((0,1),(1,0))=((\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}))=(x,y)$$
-But if we compute $x\tp y=\left< (\frac{1}{2},\frac{1}{2}),(\frac{1}{2},\frac{1}{2}) \right>=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$, so the third condition of our function $h$ does not hold on this point, hence our set is not convex.\\
+Lastly, we will take $\lambda=\frac{1}{2}$. We can compute 
+$$
+z=\lambda z_1 + (1-\lambda) z_2
+=\frac{1}{2}
+\left(
+	\begin{pmatrix} 1\\ 0\end{pmatrix},
+	\begin{pmatrix} 0\\ 1\end{pmatrix}
+\right)
++\frac{1}{2}
+\left(
+	\begin{pmatrix} 0\\ 1\end{pmatrix},
+	\begin{pmatrix} 1\\ 0\end{pmatrix}
+\right)
+=
+\left(
+	\begin{pmatrix} \sfrac{1}{2}\\ \sfrac{1}{2}\end{pmatrix},
+	\begin{pmatrix} \sfrac{1}{2}\\ \sfrac{1}{2}\end{pmatrix}
+\right)
+=(x,y)$$
+But now, we have $x\tp y=
+\begin{pmatrix} \frac{1}{2}& \frac{1}{2}\end{pmatrix}
+\begin{pmatrix} \sfrac{1}{2}\\ \sfrac{1}{2}\end{pmatrix}
+=(\frac{1}{2})^2+(\frac{1}{2})^2=\frac{1}{2} \neq 0$. So the third condition of our function $h$ does not hold at this point, hence the set $S$ is not convex.\\
 
 By definition, LICQ holds at $x\in S$ if and only if $\nabla h_1(x),\dots\nabla h_p(x)$, and $\nabla g_i(x)$ for $i\in \mathcal I(x) $ are linearly independant.\\
 Here, we do not have any constraint function $g_i$ but we have three functions $h_i$:
@@ -151,10 +188,10 @@ and by rewriting the scalar product we get
 $$\lambda_{\min} ||u||^2 \leq u\tp A u \leq \lambda_{\max} ||u||^2$$
 Applied to our problems (let's look at the first as they are similar), knowing that we optimize on vector of norm 1, we get that for every feasible $x$, we have
 $$\frac{1}{2}\lambda_{\min}  \leq\frac{1}{2} x\tp A x \leq\frac{1}{2} \lambda_{\max} $$
-It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{\min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it:\\
-As $\lambda_{\min}$ is an eigenvalue, it means that $\exists v_{\min} \in \R^n, v_{\min} \neq 0$ such that $A v_{\min}=\lambda_{\min} v_{\min}$. We take $x=\frac{v_{\min}}{||v_{\min}||}$, and then we have
+It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{\min}$. If we find an $x$ that attains this bound, we will know that it is the optimal value. So let's find it.\\
+As $\lambda_{\min}$ is an eigenvalue, it means that $\exists v_{\min} \in \R^n, v_{\min} \neq 0$ such that $A v_{\min}=\lambda_{\min} v_{\min}$. We take $x=\frac{v_{\min}}{||v_{\min}||}$, which is feasible since it has norm 1, and then we have
 $$x\tp A x =\frac{1}{||v_{\min}||^2} v_{\min}\tp \left( A v_{\min} \right)=\frac{1}{||v_{\min}||^2} v_{\min}\tp (\lambda_{\min} v_{\min})=\frac{\lambda_{\min}}{||v_{\min}||^2} v_{\min}\tp v_{\min}=\frac{\lambda_{\min}}{||v_{\min}||^2} \cdot ||v_{\min}||^2=\lambda_{\min}$$
-So, this $x$, plotted in our function, would give us $\frac{1}{2}\lambda_{\min} $, which means our bound is attained, which means it is the optimal value. \\
+Therefore this $x$ has value of $\frac{1}{2}\lambda_{\min} $. This means our bound is attained, which means it is the optimal value.\\
 We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ our minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
 
 TODO On devrait comparer avec le "target problem"
@@ -182,18 +219,20 @@ By definition, $L_D(\mu)=\inf\limits_{x,y\in\R^n} L(x,y,\mu)$. Using the previou
 L_D(\mu)&=\inf\limits_{x,y\in\R^n} L(x,y,\mu) \\
 &=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} +\mu_1+\mu_2 \right\rbrace \\
 &=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} \right\rbrace+\mu_1+\mu_2   \\
-&=\begin{cases} \mu_1+\mu_2 &\text{ if }M_\mu\succeq 0 \\ -\infty &\text{ else} \end{cases}
+&=\begin{cases} \mu_1+\mu_2 &\text{if }M_\mu\succeq 0 \\ -\infty &\text{otherwise} \end{cases}
 \end{align*}
 Hence we can write the dual as:
 \begin{equation*}\tag{D} \label{D}
-\max_{\mu\in\R^3} \mu_1+\mu_2 \text{ subject to } \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
+\max_{\mu\in\R^3} \{\mu_1+\mu_2\} \quad \text{ subject to } \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix} \succeq 0
 \end{equation*}
 
 \section*{Question 5}
 We know that $M_\mu$ is symmetric for all $\mu\in\R^3$. If $\mu$ is a solution of the dual problem, then the matrix $M_\mu$ associated with the values of $\mu$ should be positive semidefinite. This implies in particular that the diagonal blocks would be positive semidefinite too, i.e. $A-2\mu_1 I_n\succeq 0$ and $B-2\mu_2 I_n \succeq 0$. The two latter conditions are equivalent to $2\mu_1\leq \lambda_{\min} (A)$ and $2\mu_2\leq \lambda_{\min}(B)$, where  $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ are the smallest eigenvalues of $A$ and $B$ respectively.\\
 Hence, if we focus only on satisfying the conditions  $A-2\mu_1 I_n\succeq 0$ and $B-2\mu_2 I_n \succeq 0$, the optimal value for \eqref{D} is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$. \\
-In fact, this is the optimal value even for the whole condition $M_\mu\succeq 0$. Indeed, by question 2,
+In fact, this is the optimal value even for the whole condition $M_\mu\succeq 0$. Indeed, by question 2, %TODO what?
+
+
 \section*{Question 6}
 To use the strong duality theorem, we need to satisfy the two following assumptions:
 \begin{align*}
@@ -243,6 +282,8 @@ Hence, we can always find $\mu^*\in\R^3$ such that $(\text{A}2)$ is satisfied, b
 
 
 \section*{Question 7}
+
+%TODO Préciser que on a écrit quand même, sans vraiment remarquer qu'ils ne voulaient pas les détails?
 
 We will first compute the gradient with respect to x. $\nabla_y$ will be done similarly.\\
 First of all, we know, by linearity, that 
@@ -298,7 +339,7 @@ Our function is named \mcode{LBetaValAndGrad} as it calls the two sub-functions 
 
 \lstinputlisting{../LBetaGrad.m}
 
-Those functions use the functions \mcode{f} and \mcode{h} which are a direct implementation of their definition.
+The first function uses the functions \mcode{f} and \mcode{h} which are a direct implementation of their definition.
 
 \section*{Question 9}
 
@@ -308,7 +349,7 @@ Here is our implementation.
 
 \lstinputlisting{../minXY.m}
 
-In the \mcode{main.m}, we defined a function handle which allow us to invoke \mcode{minXY} easily, and which does not output anything in the console.\\
+In the 19-th line of the \mcode{main.m}, we defined a function handle which allows us to invoke \mcode{minXY} easily, and which does not output anything in the console.\\
 \mcode{silentMinXY = @(mu, beta, z0) minXY(mu, beta, A, B, z0, 0);}\\
 This function with $\beta = 1.42$, $\mu = [1, 2, -3]\tp$ and initial guess $z_0 = [1, 0, -1, 2, 1, 1, 2, 0, 1, 2]\tp$  gives after 50 iterations
 \begin{lstlisting}
@@ -356,7 +397,7 @@ which have norms
 \end{lstlisting}
 
 We notice that the norme of $h(x, y)$ is divided by two at each iterations, since $\beta h(x, y)$ stays almost constant.
-This confirms---as we have seen in the lecture notes; we could hope---that $h(x_k) \approx \frac{\mu^*}{\beta_k}$. This seems indeed to be the case, as we will see in question 11.\\
+This reassures us that we could hope, as we have seen in the lecture notes, that $h(x_k) \approx \frac{\mu^*}{\beta_k}$. However, we will indeed have a convergence of this sort, as we will see in question 11, but not really to $\mu^*$, as we will see in question 12.\\
 We see that after 9 iterations, the points $x$ and $y$ are still \textit{far} from $h(x, y) = 0$. That's why we consider the augmented Lagrangian method.
 
 
@@ -388,7 +429,7 @@ which have norms
 Our obtained value for the Dual problem is mu_1 + mu_2 = -6.3288
 \end{lstlisting}
 
-This time, $h(x, y)$ goes to 0 really quickly. Moreover, we see that our estimation of $\mu$ quickly stabilizes to a fixed value--- which we know is $\mu^*$--- which is indeed the one $\beta h(x, y)$ was converging to with the Quadratic penalty method.
+This time, $h(x, y)$ goes to 0 really quickly. Moreover, we see that our estimation of $\mu$ quickly stabilizes to a fixed value which is indeed the one $\beta h(x, y)$ was converging to with the Quadratic penalty method.
 
 Note that depending on the starting points, the sign of the values may differ. But with all our tests, the numbers were $\pm$ the same.
 
@@ -408,19 +449,24 @@ $\begin{pmatrix}
 \end{pmatrix}$. The sign of the last value varies, but this is not important for the rest of our calculations.
 
 We know from question 3 that the Lagrangian is\\
-$ L(x, y, \mu) = \dfrac{1}{2}
+$$ L(x, y, \mu) = \dfrac{1}{2}
 \begin{bmatrix} x\tp & y\tp\end{bmatrix}
 \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}
 \begin{bmatrix} x \\ y \end{bmatrix}
-- 6.3288 $.
++ \mu_1 + \mu_2. $$
 
-We know that this function is convex only if the matrix---that we named $M_\mu$ in question 4---is positive semi-definite.
-In our main, the following lines are calculating the minimum eigenvalue of $M_\mu$ and outputs a warning in the console.
+We know that this function, for a fixed $\mu$, is convex only if the matrix---that we named $M_\mu$ in question 4---is positive semi-definite.
+In our main, the following lines are calculating the minimum eigenvalue of $M_\mu$ and may output a warning in the console.
 
 \lstinputlisting[firstline=134, lastline=140]{../main.m}
 
-As this warning is triggered by our value of $\mu$, we conclude that $\mu$ is not feasible in (D). That is bad news, since our hope was that $\mu^k$ goes to $\mu^*$ as our algorithm progresses, and since $\mu$ seems\footnote{$\mu$ should be the limit of our calculated sequence $\mu^k$. In practice, we stop at $\mu^9$. Two things motivate this choice. First, the value of $\mu^k$ rapidly converged, and, as the associated value $h(x^k)$ is really close to zero at that point, the value of $\mu^k$ should stay unchanged. But secondly, as $\beta$ increases if we do too much iterations, small calculation residues in $h(x^k)$ will be drastically amplified and will change $\mu^k$ and reach extreme values.} to be the limit of $\mu^k$. Note that if $\mu$ was feasible, then $\mu_1 + \mu_2 = -6.3288$ would be a lower bound for the value $f(x, y)$ from the weak duality theorem, and we could conclude that our found $(x, y)$ (which reached this value) is a global minimum.
+As this warning is triggered by our value of $\mu$, we conclude that $L(x, y, \mu)$ is not convex for this $\mu$, and also that $\mu$ is not feasible in (D). That is bad news, since our hope was that $\mu^k$ goes to $\mu^*$ as our algorithm progresses; but instead we have $\mu$, which is the limit\footnote{$\mu$ should be the limit of our calculated sequence $\mu^k$. In practice, we stop at $\mu^9$. Two things motivate this choice. First, the value of $\mu^k$ rapidly converged, and, as the associated value $h(x^k)$ is really close to zero at that point, the value of $\mu^k$ should stay unchanged. But secondly, as $\beta$ increases if we do too much iterations, small calculation residues in $h(x^k)$ will be drastically amplified and will change $\mu^k$ to reach extreme values.}
+of $\mu^k$, that is not feasible in (D) and therefore not $\mu^*$. Note that if $\mu$ was feasible, then $\mu_1 + \mu_2 = -6.3288$ would be a lower bound for the value $f(x, y)$ from the weak duality theorem, and we could conclude that our found $(x, y)$ (which reached this value) is a global minimum.
+Note that the optimal value for (D) is bounded by $\frac{\lambda_min(A) + \lambda_min(B)}{2}$ = , therefore there is no $\mu$ that will show that our found $(x, y)$ is a global minimum. %TODO compléter la valeur, qui doit être calculée par MatLab... (ou Octave, si jamais)
+
+Now we consider the strong duality theorem. We have seen in question 6 that the first assumption holds. However, we can't know if the second one holds before actually solving the problem. We also know that if the theorem does not hold, then there will be a gap between the optimal values for (P) and (D). With our found $(x, y)$, we see that there is a gap with the optimal value of (D), but we can't know if we truly found an optimal point for (P), or if there is a better solution---hiding somewhere and really difficult to find---with no gap and a feasible $\mu^*$, which would make the Lagrangian convex. Thus, we can't know that the theorem holds, nor be sure that it does not hold. However, we are pretty close of a no-gap solution, and the fact that that every execution of our algorithm leaves to the same (four, considering axial symmetries) solutions is reassuring in thinking that no better solution exists.
+
 
 \pagebreak
 ========================================================\\
