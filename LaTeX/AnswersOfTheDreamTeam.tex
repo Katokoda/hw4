@@ -194,10 +194,11 @@ It tells us that our optimal value can't be lower that $\frac{1}{2} \lambda_{\mi
 As $\lambda_{\min}$ is an eigenvalue, it means that $\exists v_{\min} \in \R^n, v_{\min} \neq 0$ such that $A v_{\min}=\lambda_{\min} v_{\min}$. We take $x=\frac{v_{\min}}{||v_{\min}||}$, which is feasible since it has norm 1, and then we have
 $$x\tp A x =\frac{1}{||v_{\min}||^2} v_{\min}\tp \left( A v_{\min} \right)=\frac{1}{||v_{\min}||^2} v_{\min}\tp (\lambda_{\min} v_{\min})=\frac{\lambda_{\min}}{||v_{\min}||^2} v_{\min}\tp v_{\min}=\frac{\lambda_{\min}}{||v_{\min}||^2} \cdot ||v_{\min}||^2=\lambda_{\min}$$
 Therefore our lower bound is attained for this $x$, which means it is the optimal value.\\
-We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ the minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.
+We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ the minimal eigenvalues for the matrices $A$ and $B$. From our previous reasoning, we have that $\frac{\lambda_{\min} (A)}{2}$ and $\frac{\lambda_{\min} (B)}{2}$ are our optimal values, and so the optimal value for our relaxed problem is $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$.\\
 
-TODO On devrait comparer avec le "target problem"//
-ez : c'est pas juste que ça nous donne une lower bound vu que le relaxed enlève une condition ?
+%%TODO On devrait comparer avec le "target problem"// ez : c'est pas juste que ça nous donne une lower bound vu que le relaxed enlève une condition ?
+Now, what does that say about our target problem?\\
+Because our relaxed problem is our target problem minus a condition, we know its optimal value must be lower than the optimal value of the target problem, as every feasible solution of our target problem is feasible in our relaxed problem. Therefore, we can say that our target problem has a lower bound of $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$. However, we don't know (yet) if it is the optimal value or not.
 
 \section*{Question 3}
 Let's find an expression for the Lagrangian function $L(x,y,\mu)$. We denote $I_n$ for the identity matrix in $\R^{n\times n}$.
@@ -206,12 +207,13 @@ L(x,y,\mu) &= f(x,y)+\mu\tp h(x,y) \\
 &=\fxy  + \begin{bmatrix} \mu_1 &\mu_2 & \mu_3 \end{bmatrix} \hxy \\
 &=\fxy + \mu_1(1-x\tp x) +\mu_2(1-y\tp y) + \mu_3 x\tp y \\
 &= \dfrac{1}{2}\left(x\tp A x - 2\mu_1 x\tp x +  y\tp B y -2\mu_2 y\tp y + 2\mu_3 x\tp y\right) + \mu_1+\mu_2 \\
+&= \dfrac{1}{2} \left(x\tp  \left( A - 2\mu_1 I_n \right) x +  y\tp \left( B -2\mu_2 I_n \right) y   + x\tp  \left( \mu_3 I_n \right) y+ y\tp \left( \mu_3 I_n \right) x \right) + \mu_1+\mu_2 \\
 &= \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}
 \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
 \mu_3 I_n & B-2\mu_2 I_n \end{bmatrix}
 \begin{bmatrix} x \\ y \end{bmatrix} +\mu_1+\mu_2 
 \end{align*}
-As $A$ and $B$ are symmetric by assumptions, we see that the above matrix is symmetric.
+As $A$ and $B$ are symmetric by assumptions, and $I_n$ is also symmetric, we see that the above matrix is symmetric.
 
 
 \section*{Question 4}
@@ -223,6 +225,7 @@ L_D(\mu)&=\inf\limits_{x,y\in\R^n} L(x,y,\mu) \\
 &=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} \right\rbrace+\mu_1+\mu_2   \\
 &=\begin{cases} \mu_1+\mu_2 &\text{if }M_\mu\succeq 0 \\ -\infty &\text{otherwise} \end{cases}
 \end{align*}
+Because if we do not have $M_\mu\succeq 0 $, there exists a negative eigenvalue $\lambda$ and its associated eigenvector $v \in \R^{2n}$ (by simplicity we take v such that $||v||=1$) such that$ M_\mu v=\lambda v$, and so, $\forall n \in \N$, we have that $nv M_\mu nv=n^2 v \lambda v=n^2 \lambda$, so by taking the sequence $(nv)_{n \in \N}$, we have a sequence of vectors such that $L(v_x,v_y,\mu) \to \infty$ (where $v_x$ and $v_y$ described respectively the n first and n last coordinates of the vector).\\
 Hence we can write the dual as:
 \begin{equation*}\tag{D} \label{D}
 \max_{\mu\in\R^3} \{\mu_1+\mu_2\} \quad \text{ subject to } \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
@@ -300,11 +303,8 @@ We will first compute the gradient with respect to $x$. $\nabla_y$ will be done 
 First of all, we know, by linearity, that 
 $$\nabla_x L_{\beta}(x,y,\mu)=\nabla_x f(x,y) + \nabla_x \mu\tp h(x,y)+ \frac{\beta}{2} \nabla_x ||h(x)||^2$$
 We will compute each of these expressions:\\
-\begin{align*}
-\p f(x,y)&=\frac{1}{2} \p x\tp A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{\substack{j,k=1\\ j,k\neq i}}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)\\
-&=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
-\end{align*}
-As $\p f(x,y)$ is the $i$-th element of $\nabla_x f(x,y)$, we get that $\nabla_x f(x,y)= Ax$ \\
+
+We know that $\nabla_x f(x,y)= Ax$\\
 
 Now for the second one, we can develop $\mu\tp h(x,y)=\mu_1 (1-x\top x)+\mu_2(1-y\tp y) + \mu_3 x\tp y$, so we have:
 \begin{align*}
@@ -416,7 +416,7 @@ We see that after 9 iterations, the points $x$ and $y$ are still \textit{far} fr
 The part of the \mcode{main} running the augmented Lagrangian method is the following:
 \lstinputlisting[firstline=91, lastline=113]{../main.m}
 
-Note that the only difference is the update of $\mu$ at line 10. Also, we decided not to choose a new $z_0$ randomly, but to reuse the same starting point as with the QPM of question 10.
+Note that the only difference is the update of $\mu$ at line 9. Also, we decided not to choose a new $z_0$ randomly, but to reuse the same starting point as with the QPM of question 10.
 The final iteration leaves:
 \begin{lstlisting}
 Iteration 9 with beta = 256.
@@ -476,8 +476,10 @@ As this warning is triggered by our value of $\mu$, we conclude that $L(x, y, \m
 of $\mu^k$, that is not feasible in (D) and therefore not $\mu^*$. Note that if $\mu$ was feasible, then $\mu_1 + \mu_2 = -6.3288$ would be a lower bound for the value $f(x, y)$ from the weak duality theorem, and we could conclude that our found $(x, y)$ (which reached this value) is a global minimum.
 Note that the optimal value for (D) is bounded by $\frac{\lambda_{\min}(A) + \lambda_{\min}(B)}{2} = ??$ , therefore there is no $\mu$ that will show that our found $(x, y)$ is a global minimum. %TODO compléter la valeur, qui doit être calculée par MatLab... (ou Octave, si jamais)
 
-Now we consider the strong duality theorem. We have seen in question 6 that the first assumption holds. However, we can't know if the second one holds before actually solving the problem. We also know that if the theorem does not hold, then there will be a gap between the optimal values for (P) and (D). With our found $(x, y)$, we see that there is a gap with the optimal value of (D), but we can't know if we truly found an optimal point for (P), or if there is a better solution---hiding somewhere and really difficult to find---with no gap and a feasible $\mu^*$, which would make the Lagrangian convex. Thus, we can't know that the theorem holds, nor be sure that it does not hold. However, we are pretty close of a no-gap solution, and the fact that every execution of our algorithm leaves to the same (four, considering axial symmetries) solutions is reassuring in thinking that no better solution exists.
+Now we consider the strong duality theorem. We have seen in question 6 that the first assumption holds. However, we can't know if the second one holds before actually solving the problem. We also know that if the theorem does not hold, then there will be a gap between the optimal values for (P) and (D). With our found $(x, y)$, we see that there is a gap with the optimal value of (D), but we can't know if we truly found an optimal point for (P), or if there is a better solution---hiding somewhere and really difficult to find---with no gap and a feasible $\mu^*$, which would make the Lagrangian convex. Thus, we can't know that the theorem holds, nor be sure that it does not hold. However, we are pretty close of a no-gap solution, and the fact that every execution of our algorithm leaves to the same (four, considering axial symmetries) solutions is reassuring in thinking that no better solution exists.\\
 
+
+TODO rajouter les itérations des qu 10 et 11
 
 \pagebreak
 ========================================================\\
@@ -494,3 +496,10 @@ Ils argumentent pas que les conditions sont vérifiées ou pas, ils tentent de m
 pour le strong duality thm c'est pas une équivalence (i think), donc en soi tu peux dire oui les conditions sont pas vérifiées donc on peut pas appliquer le thm, mais maybe on a égalité (ou dans notre cas on est très proche je crois que c'est ça que tu dis)
 
 \end{document}
+
+
+\begin{align*}
+\p f(x,y)&=\frac{1}{2} \p x\tp A x=\frac{1}{2} \p \sum_{j,k=1}^n x_j A_{ik} x_k=\frac{1}{2} \p \left( \sum_{\substack{j,k=1\\ j,k\neq i}}^n x_j A_{ik} x_k+A_{ii}x_i^2+ x_i \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)\\
+&=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n (A_{ij}+A_{ji})x_j \right)=\frac{1}{2}\left( 2 A_{ii} x_i +  \sum_{\substack{j=1 \\ j\neq i}}^n 2 A_{ij}x_j \right)= \sum_{j=1}^n  A_{ij}x_j =row_i (A) \cdot x
+\end{align*}
+As $\p f(x,y)$ is the $i$-th element of $\nabla_x f(x,y)$, we get that $\nabla_x f(x,y)= Ax$ \\
