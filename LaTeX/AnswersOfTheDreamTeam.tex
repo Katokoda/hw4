@@ -198,7 +198,7 @@ We denote $\lambda_{\min} (A)$ and $\lambda_{\min} (B)$ the minimal eigenvalues 
 
 %%TODO On devrait comparer avec le "target problem"// ez : c'est pas juste que ça nous donne une lower bound vu que le relaxed enlève une condition ?
 Now, what does that say about our target problem?\\
-Because our relaxed problem is our target problem minus a condition, we know its optimal value must be lower than the optimal value of the target problem, as every feasible solution of our target problem is feasible in our relaxed problem. Therefore, we can say that our target problem has a lower bound of $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$. However, we don't know (yet) if it is the optimal value or not.
+Because our relaxed problem is our target problem minus a constraint, we know its optimal value must be lower than the optimal value of the target problem, as every feasible solution of our target problem is feasible in our relaxed problem. Therefore, we can say that our target problem has a lower bound of $\frac{\lambda_{\min} (A)+\lambda_{\min} (B)}{2}$. However, we don't know (yet) if it is the optimal value or not.
 
 \section*{Question 3}
 Let's find an expression for the Lagrangian function $L(x,y,\mu)$. We denote $I_n$ for the identity matrix in $\R^{n\times n}$.
@@ -225,7 +225,7 @@ L_D(\mu)&=\inf\limits_{x,y\in\R^n} L(x,y,\mu) \\
 &=\inf\limits_{x,y\in\R^n} \left\lbrace \dfrac{1}{2} \begin{bmatrix} x\tp & y\tp\end{bmatrix}M_\mu\begin{bmatrix} x \\ y \end{bmatrix} \right\rbrace+\mu_1+\mu_2   \\
 &=\begin{cases} \mu_1+\mu_2 &\text{if }M_\mu\succeq 0 \\ -\infty &\text{otherwise} \end{cases}
 \end{align*}
-Because if we do not have $M_\mu\succeq 0 $, there exists a negative eigenvalue $\lambda$ and its associated eigenvector $v \in \R^{2n}$ (by simplicity we take v such that $||v||=1$) such that$ M_\mu v=\lambda v$, and so, $\forall n \in \N$, we have that $nv M_\mu nv=n^2 v \lambda v=n^2 \lambda$, so by taking the sequence $(nv)_{n \in \N}$, we have a sequence of vectors such that $L(v_x,v_y,\mu) \to \infty$ (where $v_x$ and $v_y$ described respectively the n first and n last coordinates of the vector).\\
+Indeed, if $M_\mu$ is not positive semidefinite, there exists a negative eigenvalue $\lambda<0$. We can consider its associated eigenvector $v = (v_x, v_y) \in \R^{2n}$ (with $v_x,v_y\in\R^n$; by simplicity we take $v$ such that $||v||=1$), i.e. we have $ M_\mu v=\lambda v$. Then for all $ n \in \N$, we have $(nv)\tp M_\mu (nv)=n^2 v\tp \lambda v=n^2 \lambda$, so by looking at the sequence $(nv)_{n \in \N}$, we have that $L(nv_x,nv_y,\mu) $ converges to $-\infty$.\\
 Hence we can write the dual as:
 \begin{equation*}\tag{D} \label{D}
 \max_{\mu\in\R^3} \{\mu_1+\mu_2\} \quad \text{ subject to } \begin{bmatrix} A-2\mu_1 I_n & \mu_3 I_n \\
