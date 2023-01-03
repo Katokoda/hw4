@@ -49,9 +49,8 @@ z0 = [1; 0; -1; 2; 1; 1; 2; 0; 1; 2];
 % Display
 disp('Found x and y are')
 disp([z(1:n), z(n+1:end)])
-disp("with value f(x, y) = " + f(z))
-disp("and LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-disp('and h(x, y), mu:')
+    disp("with value f(x, y) = " + f(z) + "    and LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
+disp("and h(x, y), mu:       which have norms " + vecnorm(h(z)) + ", " + vecnorm(mu))
 disp([h(z), mu])
     %}
 
@@ -68,16 +67,12 @@ for i = 1:N
     [z, zval] = silentMinXY(mu, beta, z);
 
     % Display
-    disp(newline + "Iteration " + i + " with beta = " + beta + ".")
-    disp('We found x and y:')
+    disp(newline + "Iteration " + i + " with beta = " + beta + ". We found x and y:")
     disp([z(1:n), z(n+1:end)])
-    disp("with value f(x, y) = " + f(z))
-    disp("   LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-    disp('and h(x, y), beta*h(x, y):')
+    disp("with value f(x, y) = " + f(z) + "    and LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
     hz = h(z);
+    disp("and h(x, y), beta*h(x, y):       which have norms " + vecnorm(hz) + ", " + beta * vecnorm(hz))
     disp([hz, beta * hz])
-    disp('which have norms')
-    disp([vecnorm(hz), beta * vecnorm(hz)])
 
     beta = 2 * beta; % Updating
 end
@@ -99,19 +94,19 @@ for i = 1:N
     mu = mu + beta * hz; % Updating
 
     % Display
-    disp(newline + "Iteration " + i + " with beta = " + beta + ".")
-    disp('We found x and y:')
+    disp(newline + "Iteration " + i + " with beta = " + beta + ". We found x and y:")
     disp([z(1:n), z(n+1:end)])
-    disp("with value f(x, y) = " + f(z))
-    disp("   LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
-    disp('and h(x, y), new mu:')
+    disp("with value f(x, y) = " + f(z) + "    and LBeta(x, y, mu) = " + LBeta(z, mu, beta, A, B))
+    disp("and h(x, y), new mu:       which have norms " + vecnorm(hz) + ", " + vecnorm(mu))
     disp([hz, mu])
-    disp('which have norms')
-    disp([vecnorm(hz), vecnorm(mu)])
 
     beta = 2 * beta; % Updating
 end
     %}
+
+
+disp('========================================')
+disp('Final result''s interpretation')
 
 if N > 30
     disp("ALERT: Be careful with big values of N.")
@@ -134,9 +129,9 @@ end
 I = eye(5);
 M = [A - 2 * mu(1) * I, mu(3) * I; mu(3) * I, B - 2 * mu(2) * I];
 lambdaM = min(eig(M));
+disp("hence, lambda_min(M_mu) = " + lambdaM + ".")
 if lambdaM < 0
-	disp("lambda_min(M_mu) = " + lambdaM)
-    disp("Therefore, M_mu is not semi-positive definite,")
+    disp("And therefore, M_mu is not semi-positive definite,")
     disp("and mu is not feasible in (D).")
 else
     disp("<=> M_mu is semi-positive definite.")
