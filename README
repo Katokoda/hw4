@@ -1,0 +1,11 @@
+
+========== Homework 3 of Continuous Optimization ==========
+By Estelle Baup, Samuel Bélisle and Cassandre Renaud.
+
+Here we explain what is important for you to understand and test our project.
+
+We followed the scheme and notations of the given instructions, which are in hw4.pdf. Our answers, proofs and calculations to those questions are in the file with a very serious name: AnswersOfTheDreamTeam.pdf. This report also clarifies our steps in more detail. To run our code, one needs to run main.m through Matlab. With our parameters, the program should run for a few seconds and output a long listing in the console.
+
+Note that our functions use the MATLAB Optimization Toolbox.
+
+We believe that all the needed information is in this report. Feel free to contact one of us with our EPFL mail if necessary.
